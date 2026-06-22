@@ -1,0 +1,14 @@
+aiohttp
+websockets
+pandas
+numpy
+python-dotenv
+ujson
+orjson
+tenacity
+fastapi
+uvicorn
+pytz
+sqlalchemy
+aiosqlite
+httpx

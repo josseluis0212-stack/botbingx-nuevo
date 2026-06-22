@@ -1,0 +1,100 @@
+2026-06-19 01:09:46,427 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Stop Loss price should be lower than the current price | Code: 110411 | Raw: {'code': 110411, 'msg': 'Stop Loss price should be lower than the current price', 'data': {}}
+2026-06-19 01:09:47,456 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Stop Loss price should be lower than the current price | Code: 110411 | Raw: {'code': 110411, 'msg': 'Stop Loss price should be lower than the current price', 'data': {}}
+2026-06-19 01:09:47,456 [WARNING] QUANTUM BINGX - [EXEC ENGINE] API Error on attempt 3: Max retries exceeded | Retrying in 10s
+2026-06-19 01:09:48,522 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Stop Loss price should be lower than the current price | Code: 110411 | Raw: {'code': 110411, 'msg': 'Stop Loss price should be lower than the current price', 'data': {}}
+2026-06-19 01:09:48,522 [WARNING] QUANTUM BINGX - [EXEC ENGINE] API Error on attempt 3: Max retries exceeded | Retrying in 10s
+2026-06-19 01:09:48,632 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Stop Loss price should be lower than the current price | Code: 110411 | Raw: {'code': 110411, 'msg': 'Stop Loss price should be lower than the current price', 'data': {}}
+2026-06-19 01:09:48,633 [WARNING] QUANTUM BINGX - [EXEC ENGINE] API Error on attempt 3: Max retries exceeded | Retrying in 10s
+2026-06-19 01:09:50,875 [WARNING] QUANTUM BINGX - [POSITION MANAGER] LIMIT order for JOTCHUA-USDT not filled in time. Cancelling.
+2026-06-19 01:09:54,793 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614 | Code: 109429 | Raw: {'code': 109429, 'msg': 'over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614', 'data': {}}
+2026-06-19 01:09:54,793 [ERROR] QUANTUM BINGX - [PENALTY BOX] API banned by BingX. Sleeping for 450.8 seconds to let the ban expire...
+2026-06-19 01:09:57,630 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614 | Code: 109429 | Raw: {'code': 109429, 'msg': 'over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614', 'data': {}}
+2026-06-19 01:09:57,630 [ERROR] QUANTUM BINGX - [PENALTY BOX] API banned by BingX. Sleeping for 448.0 seconds to let the ban expire...
+2026-06-19 01:09:58,724 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Stop Loss price should be lower than the current price | Code: 110411 | Raw: {'code': 110411, 'msg': 'Stop Loss price should be lower than the current price', 'data': {}}
+2026-06-19 01:09:58,809 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614 | Code: 109429 | Raw: {'code': 109429, 'msg': 'over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614', 'data': {}}
+2026-06-19 01:09:58,809 [ERROR] QUANTUM BINGX - [PENALTY BOX] API banned by BingX. Sleeping for 446.8 seconds to let the ban expire...
+2026-06-19 01:09:59,924 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Stop Loss price should be lower than the current price | Code: 110411 | Raw: {'code': 110411, 'msg': 'Stop Loss price should be lower than the current price', 'data': {}}
+2026-06-19 01:10:02,096 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614 | Code: 109429 | Raw: {'code': 109429, 'msg': 'over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614', 'data': {}}
+2026-06-19 01:10:02,097 [ERROR] QUANTUM BINGX - [PENALTY BOX] API banned by BingX. Sleeping for 443.5 seconds to let the ban expire...
+2026-06-19 01:10:34,222 [INFO] QUANTUM BINGX - [PREDICTION] SMC_FVG_TAP LONG has clear path to TP 0.0003.
+2026-06-19 01:10:34,222 [INFO] QUANTUM BINGX - [SCORE] SMC_FVG_TAP LONG scored 70/100
+2026-06-19 01:10:34,222 [INFO] QUANTUM BINGX - [FIRE] Selected SMC_FVG_TAP LONG with score 70/100. Punteria Maxima!
+2026-06-19 01:10:34,222 [INFO] QUANTUM BINGX - [SCANNER] FIRE! 1000000BABYDOGE-USDT LONG @ 0.0003392 (SL: 0.00033856)
+2026-06-19 01:10:35,029 [INFO] QUANTUM BINGX - [EXEC ENTRY] Placing LIMIT BUY/LONG 979877.515311 @ 0.0003 on 1000000BABYDOGE-USDT
+2026-06-19 01:10:35,262 [INFO] QUANTUM BINGX - [EXEC ENTRY] LIMIT Order placed OK. ID=2067777026321813504
+2026-06-19 01:10:40,444 [INFO] QUANTUM BINGX - [POSITION MANAGER] 1000000BABYDOGE-USDT LIMIT order FILLED. Initiating management.
+2026-06-19 01:10:40,651 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Stop Loss price should be lower than the current price | Code: 110411 | Raw: {'code': 110411, 'msg': 'Stop Loss price should be lower than the current price', 'data': {}}
+2026-06-19 01:10:41,823 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614 | Code: 109429 | Raw: {'code': 109429, 'msg': 'over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614', 'data': {}}
+2026-06-19 01:10:41,823 [ERROR] QUANTUM BINGX - [PENALTY BOX] API banned by BingX. Sleeping for 403.8 seconds to let the ban expire...
+2026-06-19 01:10:48,091 [INFO] QUANTUM BINGX - [PREDICTION] SMC_AMD_BOS SHORT has clear path to TP 0.0038.
+2026-06-19 01:10:48,091 [INFO] QUANTUM BINGX - [SCORE] SMC_AMD_BOS SHORT scored 90/100
+2026-06-19 01:10:48,091 [INFO] QUANTUM BINGX - [FIRE] Selected SMC_AMD_BOS SHORT with score 90/100. Punteria Maxima!
+2026-06-19 01:10:48,091 [INFO] QUANTUM BINGX - [SCANNER] FIRE! JOTCHUA-USDT SHORT @ 0.00425 (SL: 0.00447637)
+2026-06-19 01:10:48,913 [INFO] QUANTUM BINGX - [EXEC ENTRY] Placing LIMIT SELL/SHORT 5019.990319 @ 0.0061 on JOTCHUA-USDT
+2026-06-19 01:10:49,088 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614 | Code: 109429 | Raw: {'code': 109429, 'msg': 'over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614', 'data': {}}
+2026-06-19 01:10:49,088 [ERROR] QUANTUM BINGX - [PENALTY BOX] API banned by BingX. Sleeping for 396.5 seconds to let the ban expire...
+2026-06-19 01:11:22,823 [WARNING] QUANTUM BINGX - [POSITION MANAGER] LIMIT order for JOTCHUA-USDT not filled in time. Cancelling.
+2026-06-19 01:12:09,925 [INFO] QUANTUM BINGX - [PREDICTION] SMC_FVG_TAP LONG has clear path to TP 0.0003.
+2026-06-19 01:12:09,926 [INFO] QUANTUM BINGX - [SCORE] SMC_FVG_TAP LONG scored 70/100
+2026-06-19 01:12:09,926 [INFO] QUANTUM BINGX - [FIRE] Selected SMC_FVG_TAP LONG with score 70/100. Punteria Maxima!
+2026-06-19 01:12:09,926 [INFO] QUANTUM BINGX - [SCANNER] FIRE! 1000000BABYDOGE-USDT LONG @ 0.0003392 (SL: 0.00033856)
+2026-06-19 01:12:10,731 [INFO] QUANTUM BINGX - [EXEC ENTRY] Placing LIMIT BUY/LONG 902497.985496 @ 0.0003 on 1000000BABYDOGE-USDT
+2026-06-19 01:12:10,904 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614 | Code: 109429 | Raw: {'code': 109429, 'msg': 'over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614', 'data': {}}
+2026-06-19 01:12:10,904 [ERROR] QUANTUM BINGX - [PENALTY BOX] API banned by BingX. Sleeping for 314.7 seconds to let the ban expire...
+2026-06-19 01:12:18,798 [INFO] QUANTUM BINGX - [PREDICTION] SMC_AMD_BOS SHORT has clear path to TP 0.0038.
+2026-06-19 01:12:18,799 [INFO] QUANTUM BINGX - [SCORE] SMC_AMD_BOS SHORT scored 90/100
+2026-06-19 01:12:18,799 [INFO] QUANTUM BINGX - [FIRE] Selected SMC_AMD_BOS SHORT with score 90/100. Punteria Maxima!
+2026-06-19 01:12:18,799 [INFO] QUANTUM BINGX - [SCANNER] FIRE! JOTCHUA-USDT SHORT @ 0.00425 (SL: 0.00447637)
+2026-06-19 01:12:19,609 [INFO] QUANTUM BINGX - [EXEC ENTRY] Placing LIMIT SELL/SHORT 5206.202819 @ 0.0060 on JOTCHUA-USDT
+2026-06-19 01:12:19,841 [INFO] QUANTUM BINGX - [EXEC ENTRY] LIMIT Order placed OK. ID=2067777464945348608
+2026-06-19 01:12:30,197 [INFO] QUANTUM BINGX - [POSITION MANAGER] JOTCHUA-USDT LIMIT order FILLED. Initiating management.
+2026-06-19 01:12:30,407 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Stop Loss price should be greater than the current price | Code: 110412 | Raw: {'code': 110412, 'msg': 'Stop Loss price should be greater than the current price', 'data': {}}
+2026-06-19 01:12:30,506 [INFO] QUANTUM BINGX - [POSITION MANAGER] JOTCHUA-USDT LIMIT order FILLED. Initiating management.
+2026-06-19 01:12:30,712 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Stop Loss price should be greater than the current price | Code: 110412 | Raw: {'code': 110412, 'msg': 'Stop Loss price should be greater than the current price', 'data': {}}
+2026-06-19 01:12:31,582 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614 | Code: 109429 | Raw: {'code': 109429, 'msg': 'over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614', 'data': {}}
+2026-06-19 01:12:31,582 [ERROR] QUANTUM BINGX - [PENALTY BOX] API banned by BingX. Sleeping for 294.0 seconds to let the ban expire...
+2026-06-19 01:12:31,888 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614 | Code: 109429 | Raw: {'code': 109429, 'msg': 'over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614', 'data': {}}
+2026-06-19 01:12:31,889 [ERROR] QUANTUM BINGX - [PENALTY BOX] API banned by BingX. Sleeping for 293.7 seconds to let the ban expire...
+2026-06-19 01:12:33,272 [INFO] QUANTUM BINGX - [POSITION MANAGER] JOTCHUA-USDT LIMIT order FILLED. Initiating management.
+2026-06-19 01:12:33,446 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614 | Code: 109429 | Raw: {'code': 109429, 'msg': 'over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614', 'data': {}}
+2026-06-19 01:12:33,447 [ERROR] QUANTUM BINGX - [PENALTY BOX] API banned by BingX. Sleeping for 292.2 seconds to let the ban expire...
+2026-06-19 01:13:40,569 [INFO] QUANTUM BINGX - [PREDICTION] SMC_FVG_TAP LONG has clear path to TP 0.0003.
+2026-06-19 01:13:40,569 [INFO] QUANTUM BINGX - [SCORE] SMC_FVG_TAP LONG scored 70/100
+2026-06-19 01:13:40,569 [INFO] QUANTUM BINGX - [FIRE] Selected SMC_FVG_TAP LONG with score 70/100. Punteria Maxima!
+2026-06-19 01:13:40,569 [INFO] QUANTUM BINGX - [SCANNER] FIRE! 1000000BABYDOGE-USDT LONG @ 0.0003392 (SL: 0.00033856)
+2026-06-19 01:13:41,403 [INFO] QUANTUM BINGX - [EXEC ENTRY] Placing LIMIT BUY/LONG 923330.585326 @ 0.0003 on 1000000BABYDOGE-USDT
+2026-06-19 01:13:41,645 [INFO] QUANTUM BINGX - [EXEC ENTRY] LIMIT Order placed OK. ID=2067777808068775936
+2026-06-19 01:13:46,824 [INFO] QUANTUM BINGX - [POSITION MANAGER] 1000000BABYDOGE-USDT LIMIT order FILLED. Initiating management.
+2026-06-19 01:13:46,996 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614 | Code: 109429 | Raw: {'code': 109429, 'msg': 'over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614', 'data': {}}
+2026-06-19 01:13:46,997 [ERROR] QUANTUM BINGX - [PENALTY BOX] API banned by BingX. Sleeping for 218.6 seconds to let the ban expire...
+2026-06-19 01:13:49,469 [INFO] QUANTUM BINGX - [PREDICTION] SMC_AMD_BOS SHORT has clear path to TP 0.0038.
+2026-06-19 01:13:49,469 [INFO] QUANTUM BINGX - [SCORE] SMC_AMD_BOS SHORT scored 90/100
+2026-06-19 01:13:49,469 [INFO] QUANTUM BINGX - [FIRE] Selected SMC_AMD_BOS SHORT with score 90/100. Punteria Maxima!
+2026-06-19 01:13:49,469 [INFO] QUANTUM BINGX - [SCANNER] FIRE! JOTCHUA-USDT SHORT @ 0.00425 (SL: 0.00447637)
+2026-06-19 01:13:50,264 [INFO] QUANTUM BINGX - [EXEC ENTRY] Placing LIMIT SELL/SHORT 5185.953475 @ 0.0060 on JOTCHUA-USDT
+2026-06-19 01:13:50,436 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614 | Code: 109429 | Raw: {'code': 109429, 'msg': 'over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614', 'data': {}}
+2026-06-19 01:13:50,436 [ERROR] QUANTUM BINGX - [PENALTY BOX] API banned by BingX. Sleeping for 215.2 seconds to let the ban expire...
+2026-06-19 01:15:09,149 [WARNING] QUANTUM BINGX - [PREDICTION] SMC_OB_TAP SHORT path blocked! TP 0.0000 is behind a wall.
+2026-06-19 01:15:09,150 [INFO] QUANTUM BINGX - [SCORE] SMC_OB_TAP SHORT scored 40/100
+2026-06-19 01:15:13,342 [INFO] QUANTUM BINGX - [PREDICTION] SMC_AMD_BOS SHORT has clear path to TP 0.0004.
+2026-06-19 01:15:13,342 [INFO] QUANTUM BINGX - [SCORE] SMC_AMD_BOS SHORT scored 60/100
+2026-06-19 01:15:14,385 [WARNING] QUANTUM BINGX - [PREDICTION] SMC_AMD_BOS SHORT path blocked! TP 0.0001 is behind a wall.
+2026-06-19 01:15:14,386 [INFO] QUANTUM BINGX - [SCORE] SMC_AMD_BOS SHORT scored 30/100
+2026-06-19 01:15:16,475 [WARNING] QUANTUM BINGX - [PREDICTION] SMC_FVG_TAP SHORT path blocked! TP 0.0005 is behind a wall.
+2026-06-19 01:15:16,475 [INFO] QUANTUM BINGX - [SCORE] SMC_FVG_TAP SHORT scored 40/100
+2026-06-19 01:15:25,488 [INFO] QUANTUM BINGX - [PREDICTION] SMC_OB_TAP SHORT has clear path to TP 0.0000.
+2026-06-19 01:15:25,489 [INFO] QUANTUM BINGX - [SCORE] SMC_OB_TAP SHORT scored 70/100
+2026-06-19 01:15:25,489 [INFO] QUANTUM BINGX - [FIRE] Selected SMC_OB_TAP SHORT with score 70/100. Punteria Maxima!
+2026-06-19 01:15:25,489 [INFO] QUANTUM BINGX - [SCANNER] FIRE! DOGS-USDT SHORT @ 4.253e-05 (SL: 0.00004317)
+2026-06-19 01:15:26,318 [INFO] QUANTUM BINGX - [EXEC ENTRY] Placing LIMIT SELL/SHORT 2326161.003572 @ 0.0000 on DOGS-USDT
+2026-06-19 01:15:26,546 [WARNING] QUANTUM BINGX - [PREDICTION] SMC_FVG_TAP SHORT path blocked! TP 0.0015 is behind a wall.
+2026-06-19 01:15:26,546 [INFO] QUANTUM BINGX - [SCORE] SMC_FVG_TAP SHORT scored 40/100
+2026-06-19 01:15:26,546 [WARNING] QUANTUM BINGX - [PREDICTION] SMC_FVG_TAP SHORT path blocked! TP 0.0015 is behind a wall.
+2026-06-19 01:15:26,546 [INFO] QUANTUM BINGX - [SCORE] SMC_FVG_TAP SHORT scored 40/100
+2026-06-19 01:15:26,568 [INFO] QUANTUM BINGX - [EXEC ENTRY] LIMIT Order placed OK. ID=2067778248143540224
+2026-06-19 01:15:31,751 [INFO] QUANTUM BINGX - [POSITION MANAGER] DOGS-USDT LIMIT order FILLED. Initiating management.
+2026-06-19 01:15:31,954 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: The order size must be less than the available amount of 10134 DOGS | Code: 110424 | Raw: {'code': 110424, 'msg': 'The order size must be less than the available amount of 10134 DOGS', 'data': {}}
+2026-06-19 01:15:33,132 [WARNING] QUANTUM BINGX - [PREDICTION] SMC_AMD_BOS SHORT path blocked! TP 0.0015 is behind a wall.
+2026-06-19 01:15:33,132 [INFO] QUANTUM BINGX - [SCORE] SMC_AMD_BOS SHORT scored 30/100
+2026-06-19 01:15:33,446 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614 | Code: 109429 | Raw: {'code': 109429, 'msg': 'over 20 error code:110411 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781831845614', 'data': {}}
+2026-06-19 01:15:33,446 [ERROR] QUANTUM BINGX - [PENALTY BOX] API banned by BingX. Sleeping for 112.2 seconds to let the ban expire...

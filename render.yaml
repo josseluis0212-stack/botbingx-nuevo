@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: quantum-bot-bingx
+    env: docker
+    region: fra # Frankfurt (EU) para evitar bloqueos de IP de USA en BingX
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: BINGX_API_KEY
+        sync: false
+      - key: BINGX_SECRET_KEY
+        sync: false
+      - key: TELEGRAM_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false
+      - key: DEMO_MODE
+        value: "true"
+      - key: TIMEFRAME
+        value: "15m"
+      - key: POSITION_MARGIN
+        value: "11.0"
+      - key: MAX_OPEN_TRADES
+        value: "10"
+      - key: LEVERAGE
+        value: "10"
+      - key: ENTRY_ORDER_MAX_AGE
+        value: "180"
+      - key: MIN_VOLUME_24H
+        value: "100000000"
+      - key: USE_TELEGRAM
+        value: "true"

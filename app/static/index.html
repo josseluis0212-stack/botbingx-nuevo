@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUANTUM BINGX | Elite Terminal</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <header class="topbar">
+        <div class="logo-section">
+            <div class="logo-icon-glow" style="background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: white; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);"><i class="fa-solid fa-bolt"></i></div>
+            <div class="logo-text">
+                <h1 class="main-title" style="font-size: 1.5rem; letter-spacing: 2px;">QUANTUM <span class="gradient-text" style="background: linear-gradient(135deg, #60a5fa, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">BINGX</span></h1>
+                <div class="title-badges">
+                    <span class="badge demo" style="background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3);">SMC PRO V1</span> 
+                    <span class="badge bybit-badge" style="background-color: #2563eb; color: white; border: 1px solid #3b82f6;"><i class="fa-solid fa-building-columns"></i> BINGX EXCHANGE</span>
+                </div>
+            </div>
+        </div>
+        <div class="actions-section">
+            <button id="btn-correr" class="btn pulse"><i class="fa-solid fa-play"></i> CORRER</button>
+            <button id="btn-detener" class="btn btn-red"><i class="fa-solid fa-stop"></i> DETENER</button>
+            <button id="btn-reset" class="btn btn-outline"><i class="fa-solid fa-rotate"></i> RESET STATE</button>
+            <div class="status-indicator" style="margin-right: 15px;">ESCANER ACTIVO <span class="dot"></span></div>
+            <div class="status-indicator" style="background-color: rgba(147, 51, 234, 0.1); color: #c084fc; border: 1px solid rgba(147, 51, 234, 0.3);">🕵️ AGENTE VIGILANTE 3s <span class="dot" style="background-color: #c084fc; box-shadow: 0 0 8px #c084fc;"></span></div>
+        </div>
+    </header>
+
+    <!-- Main Dashboard Grid -->
+    <main class="dashboard-grid">
+        <!-- Row 1: Balances & Strategy Info -->
+        <section class="card balance-card">
+            <h2>SALDOS DISPONIBLES</h2>
+            <div class="balance-value" id="balance-vst">-- USDT</div>
+            <div class="balance-sub" id="balance-equity">-- Equity</div>
+            <div class="pnl-vivo">PNL VIVO: <span id="global-pnl">--</span></div>
+        </section>
+
+        <section class="card bias-card">
+            <h2>SESGO DE MERCADO</h2>
+            <div class="bias-indicator">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+                <div class="bias-text">
+                    <span class="bias-direction">NEUTRAL</span>
+                    <span class="bias-filter">BTC - FILTRO TENDENCIA</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="card strategy-card">
+            <h2 class="strategy-title" style="color: #60a5fa; text-shadow: 0 0 10px rgba(96, 165, 250, 0.5);"><i class="fa-solid fa-microchip"></i> ESTRATEGIA SMC PRO V1 (BINGX)</h2>
+            <ul class="strat-params">
+                <li><span>APALANCAMIENTO</span> <span class="param-val" id="param-leverage">--</span></li>
+                <li><span>RIESGO FIJO</span> <span class="param-val" id="param-risk">-- USDT</span></li>
+                <li><span>EJECUCIÓN</span> <span class="param-val">LIMIT POST-ONLY</span></li>
+                <li><span>TP/SL ALGORITMO</span> <span class="param-val">PRICE ACTION 0.5%</span></li>
+                <li><span>MAX TRADES</span> <span class="param-val" id="param-maxtrades">--</span></li>
+            </ul>
+        </section>
+
+        <!-- Row 2: PnL Cards -->
+        <section class="card pnl-card highlight" style="grid-column: span 4;">
+            <h2>PNL HOY</h2>
+            <div class="pnl-amount" id="pnl-today">$--</div>
+            <div class="pnl-meta">Win: <span id="win-today">-</span> | Loss: <span id="loss-today">-</span></div>
+        </section>
+
+        <!-- Row 3: Positions & Global Stats -->
+        <section class="card positions-card grid-col-span-2">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-desktop"></i> MONITOR DE POSICIONES ACTIVAS</h2>
+                <div class="active-count"><span id="active-count-val">0</span> ACTIVAS</div>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>SÍMBOLO</th>
+                        <th>ESTRATEGIA</th>
+                        <th>DIRECCIÓN</th>
+                        <th>ENTRADA</th>
+                        <th>GESTIÓN</th>
+                        <th>PNL VIVO</th>
+                        <th>ACCIÓN</th>
+                    </tr>
+                </thead>
+                <tbody id="positions-body">
+                    <tr><td colspan="7" class="text-center">Cargando posiciones...</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="card stats-card grid-col-span-1">
+            <h2><i class="fa-solid fa-chart-simple"></i> RENDIMIENTO GLOBAL</h2>
+            <div class="winrate-section">
+                <div class="winrate-labels"><span>WIN RATE</span> <span id="winrate-pct">0%</span></div>
+                <div class="progress-bar"><div class="progress-fill" id="winrate-bar" style="width: 0%;"></div></div>
+            </div>
+            <div class="metrics-grid">
+                <div class="metric">
+                    <span class="m-label">PROFIT FACTOR</span>
+                    <span class="m-value" id="profit-factor">0.00</span>
+                </div>
+                <div class="metric">
+                    <span class="m-label">R:R AVG</span>
+                    <span class="m-value">1:2.0</span>
+                </div>
+                <div class="metric">
+                    <span class="m-label">MEAN WIN</span>
+                    <span class="m-value green" id="mean-win">+$0.00</span>
+                </div>
+                <div class="metric">
+                    <span class="m-label">MEAN LOSS</span>
+                    <span class="m-value red" id="mean-loss">-$0.00</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Row 4: History & Terminal -->
+        <section class="card history-card grid-col-span-2">
+            <h2><i class="fa-solid fa-clock-rotate-left"></i> HISTORIAL DE TRADES</h2>
+            <div class="table-container" style="max-height: 300px; overflow-y: auto; margin-top: 1rem;">
+                <table class="data-table" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>SÍMBOLO</th>
+                            <th>ESTRATEGIA</th>
+                            <th>DIRECCIÓN</th>
+                            <th>MOTIVO</th>
+                            <th>FECHA/HORA</th>
+                            <th style="text-align:right;">PNL</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-list">
+                        <tr><td colspan="6" class="history-empty" style="text-align:center; padding: 2rem;">No hay trades recientes registrados en esta sesión.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="card terminal-card grid-col-span-1">
+            <h2><i class="fa-solid fa-terminal"></i> TERMINAL DE EJECUCIÓN</h2>
+            <div class="terminal-console" id="terminal-console">
+                <div class="log-line system">[SYSTEM] Conectando a QUANTUM BINGX Engine...</div>
+            </div>
+        </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

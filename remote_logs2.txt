@@ -1,0 +1,33 @@
+2026-06-13 10:04:32,290 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v3/quote/klines: PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it | Code: 109418 | Raw: {'code': 109418, 'msg': 'PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it', 'data': {}}
+2026-06-13 10:04:33,599 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v3/quote/klines: PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it | Code: 109418 | Raw: {'code': 109418, 'msg': 'PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it', 'data': {}}
+2026-06-13 10:04:35,927 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v3/quote/klines: PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it | Code: 109418 | Raw: {'code': 109418, 'msg': 'PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it', 'data': {}}
+2026-06-13 10:16:41,878 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v3/quote/klines: PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it | Code: 109418 | Raw: {'code': 109418, 'msg': 'PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it', 'data': {}}
+2026-06-13 10:16:43,196 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v3/quote/klines: PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it | Code: 109418 | Raw: {'code': 109418, 'msg': 'PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it', 'data': {}}
+2026-06-13 10:16:45,499 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v3/quote/klines: PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it | Code: 109418 | Raw: {'code': 109418, 'msg': 'PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it', 'data': {}}
+2026-06-13 10:17:40,871 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v3/quote/klines: PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it | Code: 109418 | Raw: {'code': 109418, 'msg': 'PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it', 'data': {}}
+2026-06-13 10:17:42,752 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v3/quote/klines: PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it | Code: 109418 | Raw: {'code': 109418, 'msg': 'PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it', 'data': {}}
+2026-06-13 10:17:45,047 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v3/quote/klines: PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it | Code: 109418 | Raw: {'code': 109418, 'msg': 'PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it', 'data': {}}
+2026-06-17 08:14:53,701 [WARNING] QUANTUM BINGX - =====================================================================
+2026-06-17 08:14:53,701 [WARNING] QUANTUM BINGX - 🚨 [SYSTEM ALERT] BOT RESTARTED / RECOVERED FROM RENDER SHUTDOWN
+2026-06-17 08:14:53,701 [WARNING] QUANTUM BINGX - Si no fuiste tú quien reinició el bot, el servidor en la nube (Render)
+2026-06-17 08:14:53,701 [WARNING] QUANTUM BINGX - mató el proceso y el bot acaba de revivir automáticamente.
+2026-06-17 08:14:53,701 [WARNING] QUANTUM BINGX - =====================================================================
+2026-06-17 08:14:53,701 [INFO] QUANTUM BINGX - Checking Hedge Mode...
+2026-06-17 08:14:53,902 [INFO] QUANTUM BINGX - Hedge Mode already active.
+2026-06-17 08:14:53,902 [INFO] QUANTUM BINGX - Starting QUANTUM BINGX Bot...
+2026-06-17 08:14:53,902 [INFO] QUANTUM BINGX - === STARTING QUANTUM ENGINE (OFFICIAL 30/30/40) ===
+2026-06-17 08:14:53,927 [INFO] QUANTUM BINGX - === INICIANDO RECOVERY ENGINE ===
+2026-06-17 08:14:54,193 [INFO] QUANTUM BINGX - === RECOVERY ENGINE FINALIZADO. 0 posiciones recuperadas. ===
+2026-06-17 08:14:54,367 [INFO] QUANTUM BINGX - [SYNC] Listen key obtained. Booting WebSocket...
+2026-06-17 08:14:54,367 [ERROR] QUANTUM BINGX - [ENGINE FATAL ERROR] Failed to start engine: 'AsyncBingXClient' object has no attribute 'ws'
+2026-06-17 08:14:54,368 [ERROR] QUANTUM BINGX - Traceback (most recent call last):
+File "/app/app/core/engine.py", line 70, in _safe_start
+await self.start()
+File "/app/app/core/engine.py", line 54, in start
+await self.position_manager.start()
+File "/app/app/core/position_manager.py", line 34, in start
+await self.sync.start()
+File "/app/app/core/exchange_synchronizer.py", line 35, in start
+self._ws_task = asyncio.create_task(self.client.ws.connect())
+^^^^^^^^^^^^^^
+AttributeError: 'AsyncBingXClient' object has no attribute 'ws'

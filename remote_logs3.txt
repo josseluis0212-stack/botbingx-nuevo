@@ -1,0 +1,100 @@
+2026-06-17 08:29:10,437 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:29:12,617 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:29:12,617 [WARNING] QUANTUM BINGX - [EXEC ENGINE] API Error on attempt 3: Max retries exceeded | Retrying in 10s
+2026-06-17 08:29:19,986 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:29:21,168 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:29:22,800 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:29:23,348 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:29:23,348 [WARNING] QUANTUM BINGX - [EXEC ENGINE] API Error on attempt 4: Max retries exceeded | Retrying in 15s
+2026-06-17 08:29:23,986 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:29:26,166 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:29:26,166 [WARNING] QUANTUM BINGX - [EXEC ENGINE] API Error on attempt 4: Max retries exceeded | Retrying in 15s
+2026-06-17 08:29:38,349 [ERROR] QUANTUM BINGX - [EXEC ENGINE] Max retries exhausted. Operation failed.
+2026-06-17 08:29:38,529 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:29:39,711 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:29:41,167 [ERROR] QUANTUM BINGX - [EXEC ENGINE] Max retries exhausted. Operation failed.
+2026-06-17 08:29:41,348 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:29:41,893 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:29:41,893 [WARNING] QUANTUM BINGX - [EXEC ENGINE] API Error on attempt 1: Max retries exceeded | Retrying in 3s
+2026-06-17 08:29:42,527 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:29:44,710 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:29:44,710 [WARNING] QUANTUM BINGX - [EXEC ENGINE] API Error on attempt 1: Max retries exceeded | Retrying in 3s
+2026-06-17 08:29:45,071 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:29:46,252 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:29:47,892 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:29:48,432 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:29:48,432 [WARNING] QUANTUM BINGX - [EXEC ENGINE] API Error on attempt 2: Max retries exceeded | Retrying in 5s
+2026-06-17 08:29:49,071 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:29:51,258 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:29:51,258 [WARNING] QUANTUM BINGX - [EXEC ENGINE] API Error on attempt 2: Max retries exceeded | Retrying in 5s
+2026-06-17 08:29:53,613 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:29:54,795 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:29:56,436 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: over 20 error code:109400 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781685412092 | Code: 109429 | Raw: {'code': 109429, 'msg': 'over 20 error code:109400 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781685412092', 'data': {}}
+2026-06-17 08:29:56,436 [ERROR] QUANTUM BINGX - [PENALTY BOX] API banned by BingX. Sleeping for 415.7 seconds to let the ban expire...
+2026-06-17 08:29:56,976 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: over 20 error code:109400 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781685412092 | Code: 109429 | Raw: {'code': 109429, 'msg': 'over 20 error code:109400 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781685412092', 'data': {}}
+2026-06-17 08:29:56,976 [ERROR] QUANTUM BINGX - [PENALTY BOX] API banned by BingX. Sleeping for 415.1 seconds to let the ban expire...
+2026-06-17 08:30:15,915 [WARNING] QUANTUM BINGX - [PREDICTION] SMC_FVG_TAP LONG path blocked! TP 67152.5286 is behind a wall.
+2026-06-17 08:30:15,915 [INFO] QUANTUM BINGX - [SCORE] SMC_FVG_TAP LONG scored 50/100
+2026-06-17 08:30:21,532 [INFO] QUANTUM BINGX - [PREDICTION] SMC_FVG_TAP LONG has clear path to TP 0.0000.
+2026-06-17 08:30:21,533 [INFO] QUANTUM BINGX - [SCORE] SMC_FVG_TAP LONG scored 90/100
+2026-06-17 08:30:21,533 [INFO] QUANTUM BINGX - [FIRE] Selected SMC_FVG_TAP LONG with score 90/100. Punteria Maxima!
+2026-06-17 08:30:21,533 [INFO] QUANTUM BINGX - [SCANNER] FIRE! SHIB-USDT LONG @ 5.114e-06 (SL: 0.0000)
+2026-06-17 08:30:22,168 [INFO] QUANTUM BINGX - [EXEC ENTRY] Placing LIMIT BUY/LONG 210328638.497652 @ 0.0000 on SHIB-USDT
+2026-06-17 08:30:22,403 [INFO] QUANTUM BINGX - [EXEC ENTRY] LIMIT Order placed OK. ID=2067162926277464064
+2026-06-17 08:30:23,582 [INFO] QUANTUM BINGX - [POSITION MANAGER] SHIB-USDT LIMIT order FILLED. Initiating management.
+2026-06-17 08:30:23,760 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: over 20 error code:109400 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781685412092 | Code: 109429 | Raw: {'code': 109429, 'msg': 'over 20 error code:109400 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781685412092', 'data': {}}
+2026-06-17 08:30:23,760 [ERROR] QUANTUM BINGX - [PENALTY BOX] API banned by BingX. Sleeping for 388.3 seconds to let the ban expire...
+2026-06-17 08:30:28,611 [INFO] QUANTUM BINGX - [PREDICTION] SMC_FVG_TAP LONG has clear path to TP 0.0001.
+2026-06-17 08:30:28,611 [INFO] QUANTUM BINGX - [SCORE] SMC_FVG_TAP LONG scored 90/100
+2026-06-17 08:30:28,611 [INFO] QUANTUM BINGX - [FIRE] Selected SMC_FVG_TAP LONG with score 90/100. Punteria Maxima!
+2026-06-17 08:30:28,611 [INFO] QUANTUM BINGX - [SCANNER] FIRE! TOSHI-USDT LONG @ 0.0001359 (SL: 0.0001)
+2026-06-17 08:30:29,253 [INFO] QUANTUM BINGX - [EXEC ENTRY] Placing LIMIT BUY/LONG 6642941.874259 @ 0.0001 on TOSHI-USDT
+2026-06-17 08:30:29,483 [INFO] QUANTUM BINGX - [EXEC ENTRY] LIMIT Order placed OK. ID=2067162955968942080
+2026-06-17 08:30:30,668 [INFO] QUANTUM BINGX - [POSITION MANAGER] TOSHI-USDT LIMIT order FILLED. Initiating management.
+2026-06-17 08:30:30,844 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:30:32,020 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: over 20 error code:109400 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781685412092 | Code: 109429 | Raw: {'code': 109429, 'msg': 'over 20 error code:109400 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781685412092', 'data': {}}
+2026-06-17 08:30:32,020 [ERROR] QUANTUM BINGX - [PENALTY BOX] API banned by BingX. Sleeping for 380.1 seconds to let the ban expire...
+2026-06-17 08:30:33,199 [WARNING] QUANTUM BINGX - [PREDICTION] SMC_FVG_TAP SHORT path blocked! TP 0.0002 is behind a wall.
+2026-06-17 08:30:33,199 [INFO] QUANTUM BINGX - [SCORE] SMC_FVG_TAP SHORT scored 50/100
+2026-06-17 08:30:38,482 [INFO] QUANTUM BINGX - [PREDICTION] SMC_FVG_TAP LONG has clear path to TP 0.0000.
+2026-06-17 08:30:38,482 [INFO] QUANTUM BINGX - [SCORE] SMC_FVG_TAP LONG scored 70/100
+2026-06-17 08:30:38,482 [INFO] QUANTUM BINGX - [FIRE] Selected SMC_FVG_TAP LONG with score 70/100. Punteria Maxima!
+2026-06-17 08:30:38,482 [INFO] QUANTUM BINGX - [SCANNER] FIRE! DOGS-USDT LONG @ 4.463e-05 (SL: 0.0000)
+2026-06-17 08:30:39,135 [INFO] QUANTUM BINGX - [EXEC ENTRY] Placing LIMIT BUY/LONG 30286641.427799 @ 0.0000 on DOGS-USDT
+2026-06-17 08:30:39,369 [INFO] QUANTUM BINGX - [EXEC ENTRY] LIMIT Order placed OK. ID=2067162997438025728
+2026-06-17 08:30:40,551 [INFO] QUANTUM BINGX - [POSITION MANAGER] DOGS-USDT LIMIT order FILLED. Initiating management.
+2026-06-17 08:30:40,731 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:30:41,914 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: over 20 error code:109400 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781685412092 | Code: 109429 | Raw: {'code': 109429, 'msg': 'over 20 error code:109400 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781685412092', 'data': {}}
+2026-06-17 08:30:41,914 [ERROR] QUANTUM BINGX - [PENALTY BOX] API banned by BingX. Sleeping for 370.2 seconds to let the ban expire...
+2026-06-17 08:30:44,104 [WARNING] QUANTUM BINGX - [PREDICTION] SMC_FVG_TAP LONG path blocked! TP 0.0005 is behind a wall.
+2026-06-17 08:30:44,104 [INFO] QUANTUM BINGX - [SCORE] SMC_FVG_TAP LONG scored 50/100
+2026-06-17 08:31:49,409 [WARNING] QUANTUM BINGX - [PREDICTION] SMC_FVG_TAP LONG path blocked! TP 67152.5286 is behind a wall.
+2026-06-17 08:31:49,409 [INFO] QUANTUM BINGX - [SCORE] SMC_FVG_TAP LONG scored 50/100
+2026-06-17 08:31:54,657 [INFO] QUANTUM BINGX - [PREDICTION] SMC_FVG_TAP LONG has clear path to TP 0.0000.
+2026-06-17 08:31:54,657 [INFO] QUANTUM BINGX - [SCORE] SMC_FVG_TAP LONG scored 90/100
+2026-06-17 08:31:54,657 [INFO] QUANTUM BINGX - [FIRE] Selected SMC_FVG_TAP LONG with score 90/100. Punteria Maxima!
+2026-06-17 08:31:54,657 [INFO] QUANTUM BINGX - [SCANNER] FIRE! SHIB-USDT LONG @ 5.114e-06 (SL: 0.0000)
+2026-06-17 08:31:55,304 [INFO] QUANTUM BINGX - [EXEC ENTRY] Placing LIMIT BUY/LONG 210328638.497652 @ 0.0000 on SHIB-USDT
+2026-06-17 08:31:55,479 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: over 20 error code:109400 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781685412092 | Code: 109429 | Raw: {'code': 109429, 'msg': 'over 20 error code:109400 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781685412092', 'data': {}}
+2026-06-17 08:31:55,479 [ERROR] QUANTUM BINGX - [PENALTY BOX] API banned by BingX. Sleeping for 296.6 seconds to let the ban expire...
+2026-06-17 08:32:01,618 [INFO] QUANTUM BINGX - [PREDICTION] SMC_FVG_TAP LONG has clear path to TP 0.0001.
+2026-06-17 08:32:01,618 [INFO] QUANTUM BINGX - [SCORE] SMC_FVG_TAP LONG scored 90/100
+2026-06-17 08:32:01,618 [INFO] QUANTUM BINGX - [FIRE] Selected SMC_FVG_TAP LONG with score 90/100. Punteria Maxima!
+2026-06-17 08:32:01,618 [INFO] QUANTUM BINGX - [SCANNER] FIRE! TOSHI-USDT LONG @ 0.0001359 (SL: 0.0001)
+2026-06-17 08:32:02,266 [INFO] QUANTUM BINGX - [EXEC ENTRY] Placing LIMIT BUY/LONG 6642941.874259 @ 0.0001 on TOSHI-USDT
+2026-06-17 08:32:02,447 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: over 20 error code:109400 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781685412092 | Code: 109429 | Raw: {'code': 109429, 'msg': 'over 20 error code:109400 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781685412092', 'data': {}}
+2026-06-17 08:32:02,447 [ERROR] QUANTUM BINGX - [PENALTY BOX] API banned by BingX. Sleeping for 289.6 seconds to let the ban expire...
+2026-06-17 08:32:06,144 [WARNING] QUANTUM BINGX - [PREDICTION] SMC_FVG_TAP SHORT path blocked! TP 0.0002 is behind a wall.
+2026-06-17 08:32:06,144 [INFO] QUANTUM BINGX - [SCORE] SMC_FVG_TAP SHORT scored 50/100
+2026-06-17 08:32:11,403 [INFO] QUANTUM BINGX - [PREDICTION] SMC_FVG_TAP LONG has clear path to TP 0.0000.
+2026-06-17 08:32:11,403 [INFO] QUANTUM BINGX - [SCORE] SMC_FVG_TAP LONG scored 70/100
+2026-06-17 08:32:11,403 [INFO] QUANTUM BINGX - [FIRE] Selected SMC_FVG_TAP LONG with score 70/100. Punteria Maxima!
+2026-06-17 08:32:11,403 [INFO] QUANTUM BINGX - [SCANNER] FIRE! DOGS-USDT LONG @ 4.463e-05 (SL: 0.0000)
+2026-06-17 08:32:12,076 [INFO] QUANTUM BINGX - [EXEC ENTRY] Placing LIMIT BUY/LONG 30286641.427799 @ 0.0000 on DOGS-USDT
+2026-06-17 08:32:12,306 [INFO] QUANTUM BINGX - [EXEC ENTRY] LIMIT Order placed OK. ID=2067163387244056576
+2026-06-17 08:32:13,490 [INFO] QUANTUM BINGX - [POSITION MANAGER] DOGS-USDT LIMIT order FILLED. Initiating management.
+2026-06-17 08:32:13,671 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: In the Hedge mode, the 'ReduceOnly' field can not be filled. | Code: 109400 | Raw: {'code': 109400, 'msg': "In the Hedge mode, the 'ReduceOnly' field can not be filled.", 'data': {}}
+2026-06-17 08:32:14,847 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: over 20 error code:109400 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781685412092 | Code: 109429 | Raw: {'code': 109429, 'msg': 'over 20 error code:109400 requests within 480000 ms for this api, please verify and fix it ,can retry after time: 1781685412092', 'data': {}}
+2026-06-17 08:32:14,848 [ERROR] QUANTUM BINGX - [PENALTY BOX] API banned by BingX. Sleeping for 277.2 seconds to let the ban expire...
+2026-06-17 08:32:16,672 [WARNING] QUANTUM BINGX - [PREDICTION] SMC_FVG_TAP LONG path blocked! TP 0.0005 is behind a wall.
+2026-06-17 08:32:16,672 [INFO] QUANTUM BINGX - [SCORE] SMC_FVG_TAP LONG scored 50/100

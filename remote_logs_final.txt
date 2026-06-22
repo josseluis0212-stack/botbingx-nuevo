@@ -1,0 +1,74 @@
+2026-06-13 10:04:32,290 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v3/quote/klines: PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it | Code: 109418 | Raw: {'code': 109418, 'msg': 'PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it', 'data': {}}
+2026-06-13 10:04:33,599 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v3/quote/klines: PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it | Code: 109418 | Raw: {'code': 109418, 'msg': 'PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it', 'data': {}}
+2026-06-13 10:04:35,927 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v3/quote/klines: PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it | Code: 109418 | Raw: {'code': 109418, 'msg': 'PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it', 'data': {}}
+2026-06-13 10:16:41,878 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v3/quote/klines: PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it | Code: 109418 | Raw: {'code': 109418, 'msg': 'PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it', 'data': {}}
+2026-06-13 10:16:43,196 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v3/quote/klines: PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it | Code: 109418 | Raw: {'code': 109418, 'msg': 'PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it', 'data': {}}
+2026-06-13 10:16:45,499 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v3/quote/klines: PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it | Code: 109418 | Raw: {'code': 109418, 'msg': 'PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it', 'data': {}}
+2026-06-13 10:17:40,871 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v3/quote/klines: PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it | Code: 109418 | Raw: {'code': 109418, 'msg': 'PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it', 'data': {}}
+2026-06-13 10:17:42,752 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v3/quote/klines: PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it | Code: 109418 | Raw: {'code': 109418, 'msg': 'PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it', 'data': {}}
+2026-06-13 10:17:45,047 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v3/quote/klines: PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it | Code: 109418 | Raw: {'code': 109418, 'msg': 'PEPE-USDT is offline currently,all validted symbols in api:/openApi/swap/v2/quote/contracts, please verify it', 'data': {}}
+2026-06-19 01:00:32,425 [WARNING] QUANTUM BINGX - =====================================================================
+2026-06-19 01:00:32,425 [WARNING] QUANTUM BINGX - 🚨 [SYSTEM ALERT] BOT RESTARTED / RECOVERED FROM RENDER SHUTDOWN
+2026-06-19 01:00:32,425 [WARNING] QUANTUM BINGX - Si no fuiste tú quien reinició el bot, el servidor en la nube (Render)
+2026-06-19 01:00:32,425 [WARNING] QUANTUM BINGX - mató el proceso y el bot acaba de revivir automáticamente.
+2026-06-19 01:00:32,426 [WARNING] QUANTUM BINGX - =====================================================================
+2026-06-19 01:00:32,426 [INFO] QUANTUM BINGX - Checking Hedge Mode...
+2026-06-19 01:00:32,629 [INFO] QUANTUM BINGX - Hedge Mode already active.
+2026-06-19 01:00:32,630 [INFO] QUANTUM BINGX - Starting QUANTUM BINGX Bot...
+2026-06-19 01:00:32,630 [INFO] QUANTUM BINGX - === STARTING QUANTUM ENGINE (OFFICIAL 30/30/40) ===
+2026-06-19 01:00:32,657 [INFO] QUANTUM BINGX - === INICIANDO RECOVERY ENGINE ===
+2026-06-19 01:00:32,913 [INFO] QUANTUM BINGX - === RECOVERY ENGINE FINALIZADO. 0 posiciones recuperadas. ===
+2026-06-19 01:00:32,913 [INFO] QUANTUM BINGX - [SYNC] Exchange Synchronizer Started (HTTP Polling Mode).
+2026-06-19 01:00:32,913 [INFO] QUANTUM BINGX - [POSITION MANAGER] Supervisor Engine and Synchronizer Started.
+2026-06-19 01:00:33,423 [INFO] QUANTUM BINGX - Fetched top 30 volume symbols.
+2026-06-19 01:00:33,423 [INFO] QUANTUM BINGX - [SCANNER] Market scanner active (60s interval).
+2026-06-19 01:00:38,151 [INFO] QUANTUM BINGX - [PREDICTION] SMC_FVG_TAP SHORT has clear path to TP 0.0001.
+2026-06-19 01:00:38,151 [INFO] QUANTUM BINGX - [SCORE] SMC_FVG_TAP SHORT scored 70/100
+2026-06-19 01:00:38,151 [INFO] QUANTUM BINGX - [FIRE] Selected SMC_FVG_TAP SHORT with score 70/100. Punteria Maxima!
+2026-06-19 01:00:38,151 [INFO] QUANTUM BINGX - [SCANNER] FIRE! GITLAWB-USDT SHORT @ 7.71e-05 (SL: 0.00007793)
+2026-06-19 01:00:38,784 [INFO] QUANTUM BINGX - [EXEC ENTRY] Placing LIMIT SELL/SHORT 9688581.314879 @ 0.0001 on GITLAWB-USDT
+2026-06-19 01:00:39,368 [INFO] QUANTUM BINGX - [EXEC ENTRY] LIMIT Order placed OK. ID=2067774526961225728
+2026-06-19 01:00:42,343 [INFO] QUANTUM BINGX - [PREDICTION] SMC_FVG_TAP LONG has clear path to TP 0.0003.
+2026-06-19 01:00:42,343 [INFO] QUANTUM BINGX - [SCORE] SMC_FVG_TAP LONG scored 70/100
+2026-06-19 01:00:42,343 [INFO] QUANTUM BINGX - [FIRE] Selected SMC_FVG_TAP LONG with score 70/100. Punteria Maxima!
+2026-06-19 01:00:42,343 [INFO] QUANTUM BINGX - [SCANNER] FIRE! 1000000BABYDOGE-USDT LONG @ 0.0003392 (SL: 0.00033856)
+2026-06-19 01:00:42,987 [INFO] QUANTUM BINGX - [EXEC ENTRY] Placing LIMIT BUY/LONG 12584269.662921 @ 0.0003 on 1000000BABYDOGE-USDT
+2026-06-19 01:00:43,216 [INFO] QUANTUM BINGX - [EXEC ENTRY] LIMIT Order placed OK. ID=2067774543100907520
+2026-06-19 01:00:48,396 [INFO] QUANTUM BINGX - [POSITION MANAGER] 1000000BABYDOGE-USDT LIMIT order FILLED. Initiating management.
+2026-06-19 01:00:48,600 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Stop Loss price should be lower than the current price | Code: 110411 | Raw: {'code': 110411, 'msg': 'Stop Loss price should be lower than the current price', 'data': {}}
+2026-06-19 01:00:49,804 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Stop Loss price should be lower than the current price | Code: 110411 | Raw: {'code': 110411, 'msg': 'Stop Loss price should be lower than the current price', 'data': {}}
+2026-06-19 01:00:50,330 [INFO] QUANTUM BINGX - [PREDICTION] SMC_FVG_TAP SHORT has clear path to TP 0.0001.
+2026-06-19 01:00:50,330 [INFO] QUANTUM BINGX - [SCORE] SMC_FVG_TAP SHORT scored 80/100
+2026-06-19 01:00:50,330 [INFO] QUANTUM BINGX - [FIRE] Selected SMC_FVG_TAP SHORT with score 80/100. Punteria Maxima!
+2026-06-19 01:00:50,330 [INFO] QUANTUM BINGX - [SCANNER] FIRE! NEIROCTO-USDT SHORT @ 6.875e-05 (SL: 0.00006899)
+2026-06-19 01:00:50,986 [INFO] QUANTUM BINGX - [EXEC ENTRY] Placing LIMIT SELL/SHORT 33898305.084745 @ 0.0001 on NEIROCTO-USDT
+2026-06-19 01:00:51,223 [INFO] QUANTUM BINGX - [EXEC ENTRY] LIMIT Order placed OK. ID=2067774576680505344
+2026-06-19 01:00:52,008 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Stop Loss price should be lower than the current price | Code: 110411 | Raw: {'code': 110411, 'msg': 'Stop Loss price should be lower than the current price', 'data': {}}
+2026-06-19 01:00:52,009 [WARNING] QUANTUM BINGX - [EXEC ENGINE] API Error on attempt 1: Max retries exceeded | Retrying in 3s
+2026-06-19 01:00:52,453 [INFO] QUANTUM BINGX - [PREDICTION] SMC_AMD_BOS SHORT has clear path to TP 0.0038.
+2026-06-19 01:00:52,453 [INFO] QUANTUM BINGX - [SCORE] SMC_AMD_BOS SHORT scored 90/100
+2026-06-19 01:00:52,453 [INFO] QUANTUM BINGX - [FIRE] Selected SMC_AMD_BOS SHORT with score 90/100. Punteria Maxima!
+2026-06-19 01:00:52,453 [INFO] QUANTUM BINGX - [SCANNER] FIRE! JOTCHUA-USDT SHORT @ 0.00425 (SL: 0.00447637)
+2026-06-19 01:00:53,116 [INFO] QUANTUM BINGX - [EXEC ENTRY] Placing LIMIT SELL/SHORT 35340.148933 @ 0.0043 on JOTCHUA-USDT
+2026-06-19 01:00:53,345 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Order price should be higher than 0.004258 | Code: 101211 | Raw: {'code': 101211, 'msg': 'Order price should be higher than 0.004258', 'data': {}}
+2026-06-19 01:00:53,346 [WARNING] QUANTUM BINGX - [EXEC ENGINE] API Error on attempt 1: Order price should be higher than 0.004258 | Retrying in 3s
+2026-06-19 01:00:55,204 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Stop Loss price should be lower than the current price | Code: 110411 | Raw: {'code': 110411, 'msg': 'Stop Loss price should be lower than the current price', 'data': {}}
+2026-06-19 01:00:56,411 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Stop Loss price should be lower than the current price | Code: 110411 | Raw: {'code': 110411, 'msg': 'Stop Loss price should be lower than the current price', 'data': {}}
+2026-06-19 01:00:56,573 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Order price should be higher than 0.004257 | Code: 101211 | Raw: {'code': 101211, 'msg': 'Order price should be higher than 0.004257', 'data': {}}
+2026-06-19 01:00:56,573 [WARNING] QUANTUM BINGX - [EXEC ENGINE] API Error on attempt 2: Order price should be higher than 0.004257 | Retrying in 5s
+2026-06-19 01:00:58,608 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Stop Loss price should be lower than the current price | Code: 110411 | Raw: {'code': 110411, 'msg': 'Stop Loss price should be lower than the current price', 'data': {}}
+2026-06-19 01:00:58,608 [WARNING] QUANTUM BINGX - [EXEC ENGINE] API Error on attempt 2: Max retries exceeded | Retrying in 5s
+2026-06-19 01:01:01,792 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Order price should be higher than 0.004258 | Code: 101211 | Raw: {'code': 101211, 'msg': 'Order price should be higher than 0.004258', 'data': {}}
+2026-06-19 01:01:01,792 [WARNING] QUANTUM BINGX - [EXEC ENGINE] API Error on attempt 3: Order price should be higher than 0.004258 | Retrying in 10s
+2026-06-19 01:01:03,804 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Stop Loss price should be lower than the current price | Code: 110411 | Raw: {'code': 110411, 'msg': 'Stop Loss price should be lower than the current price', 'data': {}}
+2026-06-19 01:01:05,005 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Stop Loss price should be lower than the current price | Code: 110411 | Raw: {'code': 110411, 'msg': 'Stop Loss price should be lower than the current price', 'data': {}}
+2026-06-19 01:01:07,204 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Stop Loss price should be lower than the current price | Code: 110411 | Raw: {'code': 110411, 'msg': 'Stop Loss price should be lower than the current price', 'data': {}}
+2026-06-19 01:01:07,205 [WARNING] QUANTUM BINGX - [EXEC ENGINE] API Error on attempt 3: Max retries exceeded | Retrying in 10s
+2026-06-19 01:01:12,022 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Order price should be higher than 0.004258 | Code: 101211 | Raw: {'code': 101211, 'msg': 'Order price should be higher than 0.004258', 'data': {}}
+2026-06-19 01:01:12,023 [WARNING] QUANTUM BINGX - [EXEC ENGINE] API Error on attempt 4: Order price should be higher than 0.004258 | Retrying in 15s
+2026-06-19 01:01:17,403 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Stop Loss price should be lower than the current price | Code: 110411 | Raw: {'code': 110411, 'msg': 'Stop Loss price should be lower than the current price', 'data': {}}
+2026-06-19 01:01:18,599 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Stop Loss price should be lower than the current price | Code: 110411 | Raw: {'code': 110411, 'msg': 'Stop Loss price should be lower than the current price', 'data': {}}
+2026-06-19 01:01:20,803 [ERROR] QUANTUM BINGX - BingX API Error on https://open-api-vst.bingx.com/openApi/swap/v2/trade/order: Stop Loss price should be lower than the current price | Code: 110411 | Raw: {'code': 110411, 'msg': 'Stop Loss price should be lower than the current price', 'data': {}}
+2026-06-19 01:01:20,803 [WARNING] QUANTUM BINGX - [EXEC ENGINE] API Error on attempt 4: Max retries exceeded | Retrying in 15s
+2026-06-19 01:01:27,024 [ERROR] QUANTUM BINGX - [EXEC ENGINE] Max retries exhausted. Operation failed.
+2026-06-19 01:01:27,024 [ERROR] QUANTUM BINGX - [EXEC ENTRY] Aborting entry for JOTCHUA-USDT after backoff failures.
