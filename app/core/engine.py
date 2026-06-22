@@ -105,7 +105,7 @@ class Engine:
             # Close position on exchange immediately
             try:
                 from app.exchange.order_executor import OrderExecutionEngine
-                executor = OrderExecutionEngine(self.exchange, repo)
+                executor = OrderExecutionEngine(self.client)
                 
                 # We don't know the exact size here easily from exchange without a call, 
                 # but we can fetch positions and close all
@@ -116,9 +116,9 @@ class Engine:
         
         # Fetch and close ALL active positions on BingX to clear the dashboard
         try:
-            positions = await self.exchange.get_positions()
+            positions = await self.client.get_positions()
             from app.exchange.order_executor import OrderExecutionEngine
-            executor = OrderExecutionEngine(self.exchange, repo)
+            executor = OrderExecutionEngine(self.client)
             for pos in positions:
                 amt = float(pos.get("positionAmt", 0))
                 if abs(amt) > 0:
