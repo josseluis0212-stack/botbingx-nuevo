@@ -115,6 +115,7 @@ class RecoveryEngine:
         
         crossed_lock = (is_long and current_price >= lock_trigger) or (not is_long and current_price <= lock_trigger)
         crossed_tp1 = (is_long and current_price >= tp1) or (not is_long and current_price <= tp1)
+        crossed_tp2 = (is_long and current_price >= levels["tp2_price"]) or (not is_long and current_price <= levels["tp2_price"])
         
         sl_price_formatted = levels["sl_price"]
         tp1_qty = dist["tp1_qty"]
@@ -124,6 +125,9 @@ class RecoveryEngine:
             logger.info(f"🤝 [ADOPCIÓN DINÁMICA] {symbol} va en ALTA GANANCIA (> TP1). Asegurando con SL en ganancia.")
             sl_price_formatted = lock_sl # Aseguramos ganancias
             tp1_qty = 0 # Asumimos que ya lo pasó
+            if crossed_tp2:
+                logger.info(f"🚀 {symbol} va más allá de TP2! Cancelando colocación de TP2.")
+                tp2_qty = 0
             
         elif crossed_lock:
             logger.info(f"🤝 [ADOPCIÓN DINÁMICA] {symbol} va en POCA GANANCIA (> Breakeven). Asegurando Colchón.")
