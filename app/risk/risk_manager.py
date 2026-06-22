@@ -50,7 +50,7 @@ class RiskManager:
             
             tp1_atr = round(tp_final_atr * 0.30, 2)   # TP1 (30% de la distancia = 1.2 ATR)
             lock_atr = round(tp_final_atr * 0.33, 2) # Breakeven Trigger (33% de la distancia = ~1.32 ATR)
-            lock_sl_atr = round(tp_final_atr * 0.15, 2) # Asegurar 15% (0.6 ATR)
+            lock_sl_atr = round(tp_final_atr * 0.10, 2) # Asegurar 10% (0.4 ATR)
             tp2_atr = round(tp_final_atr * 0.60, 2)   # TP2 y Trailing (60% de la distancia = 2.4 ATR)
         
         # Cap Stop Loss Distance to max 8.5% of entry price (to prevent Liquidation at 10x)
