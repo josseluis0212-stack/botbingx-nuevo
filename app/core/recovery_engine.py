@@ -92,22 +92,52 @@ class RecoveryEngine:
         from app.exchange.order_executor import OrderExecutionEngine
         from app.risk.risk_manager import RiskManager
         
+        executor = OrderExecutionEngine(self.client)
+        
         # Calcular SL y TP usando la lógica de SMC_PRO (30/30/40) para huérfanas
-        levels = rm.calculate_levels(entry_price, atr, side, "SMC_PRO")
-        dist = rm.calculate_distribution(size, "SMC_PRO")
+        levels = RiskManager.calculate_levels(entry_price, atr, side, "SMC_PRO")
+        dist = RiskManager.calculate_distribution(size, "SMC_PRO")
+        
+        # --- LÓGICA DINÁMICA DE ADOPCIÓN ---
+        ticker = await self.client.get_ticker(symbol)
+        current_price = float(ticker.get("lastPrice", entry_price))
+        is_long = (side == "LONG")
+        
+        # Evaluar en qué etapa está:
+        tp1 = levels["tp1_price"]
+        lock_trigger = levels["lock_trigger_price"]
+        lock_sl = levels["lock_sl_price"]
+        
+        crossed_lock = (is_long and current_price >= lock_trigger) or (not is_long and current_price <= lock_trigger)
+        crossed_tp1 = (is_long and current_price >= tp1) or (not is_long and current_price <= tp1)
         
         sl_price_formatted = levels["sl_price"]
+        tp1_qty = dist["tp1_qty"]
+        tp2_qty = dist["tp2_qty"]
+        
+        if crossed_tp1:
+            logger.info(f"🤝 [ADOPCIÓN DINÁMICA] {symbol} va en ALTA GANANCIA (> TP1). Asegurando con SL en ganancia.")
+            sl_price_formatted = lock_sl # Aseguramos ganancias
+            tp1_qty = 0 # Asumimos que ya lo pasó
+            
+        elif crossed_lock:
+            logger.info(f"🤝 [ADOPCIÓN DINÁMICA] {symbol} va en POCA GANANCIA (> Breakeven). Asegurando Colchón.")
+            sl_price_formatted = lock_sl # Aseguramos colchón
+            
+        else:
+            logger.info(f"🤝 [ADOPCIÓN DINÁMICA] {symbol} está en RANGO INICIAL o PÉRDIDA. Colocando SL estándar a 2.0 ATR.")
+            
         sl_id = await executor.place_stop_loss(symbol, side, size, sl_price_formatted)
         
         if not sl_id:
             logger.error(f"❌ [ADOPCIÓN FALLIDA PARCIAL] No se pudo colocar SL para {symbol}. Razón: Falla en API de BingX. Se adoptará pero dependerá del trailing o cierre manual.")
             sl_id = ""
             
-        # Colocar TP1 (30%) y TP2 (30%)
-        if dist["tp1_qty"] > 0:
-            await executor.place_take_profit(symbol, side, dist["tp1_qty"], levels["tp1_price"])
-        if dist["tp2_qty"] > 0:
-            await executor.place_take_profit(symbol, side, dist["tp2_qty"], levels["tp2_price"])
+        # Colocar TP1 y TP2 si aplican
+        if tp1_qty > 0:
+            await executor.place_take_profit(symbol, side, tp1_qty, levels["tp1_price"])
+        if tp2_qty > 0:
+            await executor.place_take_profit(symbol, side, tp2_qty, levels["tp2_price"])
 
         # Guardar en BD con estrategia "ADOPTED"
         import uuid
