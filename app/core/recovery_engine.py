@@ -91,11 +91,9 @@ class RecoveryEngine:
         from app.exchange.order_executor import OrderExecutionEngine
         from app.risk.risk_manager import RiskManager
         
-        executor = OrderExecutionEngine(self.client)
-        rm = RiskManager()
-        
-        # Calcular SL usando la lógica de SUPERTREND (sin TPs intermedios)
-        levels = rm.calculate_levels(entry_price, atr, side, "SUPERTREND_EMA_MTF")
+        # Calcular SL y TP usando la lógica de SMC_PRO (30/30/40) para huérfanas
+        levels = rm.calculate_levels(entry_price, atr, side, "SMC_PRO")
+        dist = rm.calculate_distribution(size, "SMC_PRO")
         
         sl_price_formatted = levels["sl_price"]
         sl_id = await executor.place_stop_loss(symbol, side, size, sl_price_formatted)
@@ -103,13 +101,19 @@ class RecoveryEngine:
         if not sl_id:
             logger.warning(f"[ORPHAN ADOPTER] No se pudo colocar SL para {symbol}. Se adoptará pero dependerá del trailing o cierre manual.")
             sl_id = ""
+            
+        # Colocar TP1 (30%) y TP2 (30%)
+        if dist["tp1_qty"] > 0:
+            await executor.place_take_profit(symbol, side, dist["tp1_qty"], levels["tp1_price"])
+        if dist["tp2_qty"] > 0:
+            await executor.place_take_profit(symbol, side, dist["tp2_qty"], levels["tp2_price"])
 
-        # Guardar en BD con estrategia "ADOPTED" (actuará como Supertrend al no tener TPs)
+        # Guardar en BD con estrategia "ADOPTED"
         import uuid
         trade = TradeState(
             trade_id=str(uuid.uuid4()), symbol=symbol, side=side, entry_price=entry_price,
             position_size=size, atr=atr, stop_loss=sl_price_formatted,
-            tp1_price=0.0, tp2_price=0.0,
+            tp1_price=levels["tp1_price"], tp2_price=levels["tp2_price"],
             profit_lock_price=levels["lock_trigger_price"],
             remaining_size=size, sl_order_id=sl_id,
             strategy="ADOPTED"
