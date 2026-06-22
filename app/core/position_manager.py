@@ -232,7 +232,7 @@ class PositionManager:
             hit_lock = (trade.side == "LONG" and price >= trade.profit_lock_price) or \
                        (trade.side == "SHORT" and price <= trade.profit_lock_price)
             if hit_lock:
-                logger.info(f"[PROFIT LOCK] {symbol} alcanzó 40%. Asegurando 10%.")
+                logger.info(f"🛡️ [SEGURO ACTIVADO] Breakeven (Colchón) activado en {symbol}. Asegurando ganancia.")
                 trade.profit_lock_active = True
                 trade.stop_loss = self.risk.calculate_levels(trade.entry_price, trade.atr, trade.side)["lock_sl_price"]
                 # Modificar Stop Loss
@@ -247,7 +247,7 @@ class PositionManager:
                 hit_trailing = (trade.side == "LONG" and price >= trailing_trigger) or \
                                (trade.side == "SHORT" and price <= trailing_trigger)
                 if hit_trailing:
-                    logger.info(f"[TRAILING] {symbol} SUPERTREND_EMA_MTF superó 2.5 ATR. Activando persecución EMA21.")
+                    logger.info(f"🛡️ [SEGURO ACTIVADO] Trailing Stop Dinámico activado en {symbol}.")
                     trade.trailing_active = True
                     changed = True
 
@@ -307,7 +307,10 @@ class PositionManager:
             await self.repo.save_trade(trade)
 
         elif o_type == "STOP_MARKET":
-            logger.info(f"[POSITION CLOSED] {symbol} Stop Loss / Trailing Hit.")
+            pnl_est = 0.0
+            if trade.side == "LONG": pnl_est = (price_filled - trade.entry_price) * trade.position_size
+            else: pnl_est = (trade.entry_price - price_filled) * trade.position_size
+            logger.info(f"🔴 [CERRANDO OPERACIÓN] {symbol} cerrada. PNL Estimado: {pnl_est:.4f} USDT | Razón: Stop Loss / Trailing Hit")
             
             # Si no tocó Profit Lock, ni Trailing... es una pérdida (SL original)
             if not trade.profit_lock_active and not trade.trailing_active:
@@ -346,7 +349,7 @@ class PositionManager:
             for p in pos:
                 actual_filled_size = abs(float(p.get("positionAmt", 0)))
                 if actual_filled_size > 0:
-                    logger.info(f"[POSITION MANAGER] {symbol} LIMIT order FILLED (Size: {actual_filled_size}). Initiating management.")
+                    logger.info(f"🟢 [ABRIENDO OPERACIÓN] Abriendo {side} en {symbol} | Estrategia: {strategy_name}")
                     
                     dist = self.risk.calculate_distribution(actual_filled_size, strategy_name)
                     

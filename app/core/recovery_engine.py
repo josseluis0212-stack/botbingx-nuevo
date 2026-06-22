@@ -20,6 +20,7 @@ class RecoveryEngine:
         Devuelve un diccionario {symbol: TradeState} con las operaciones activas reales.
         """
         logger.info("=== INICIANDO RECOVERY ENGINE ===")
+        logger.info("🧠 [MEMORIA BORRADA] Se ha reseteado el estado del bot o reiniciado el servidor.")
         reconstructed_state = {}
 
         # 1. Consultar BD
@@ -53,7 +54,7 @@ class RecoveryEngine:
                     reconstructed_state[symbol] = trade
                     logger.info(f"[RECOVERY] Reconstruida operación {side} en {symbol} desde BD. Tamaño real: {trade.remaining_size}")
                 else:
-                    logger.warning(f"[RECOVERY] Operación huérfana detectada en exchange: {symbol} {side} amt={amt}. Adoptando operación...")
+                    logger.warning(f"🤝 [ADOPCIÓN] Operación huérfana detectada en exchange: {symbol} {side} amt={amt}. Iniciando protocolo de rescate...")
                     trade = await self._adopt_orphan(pos)
                     reconstructed_state[symbol] = trade
 
@@ -99,7 +100,7 @@ class RecoveryEngine:
         sl_id = await executor.place_stop_loss(symbol, side, size, sl_price_formatted)
         
         if not sl_id:
-            logger.warning(f"[ORPHAN ADOPTER] No se pudo colocar SL para {symbol}. Se adoptará pero dependerá del trailing o cierre manual.")
+            logger.error(f"❌ [ADOPCIÓN FALLIDA PARCIAL] No se pudo colocar SL para {symbol}. Razón: Falla en API de BingX. Se adoptará pero dependerá del trailing o cierre manual.")
             sl_id = ""
             
         # Colocar TP1 (30%) y TP2 (30%)
@@ -119,7 +120,7 @@ class RecoveryEngine:
             strategy="ADOPTED"
         )
         await self.repo.save_trade(trade)
-        logger.info(f"[ORPHAN ADOPTER] {symbol} {side} ADOPTADO EXITOSAMENTE con SL en {sl_price_formatted}.")
+        logger.info(f"🤝 [ADOPCIÓN EXITOSA] Operación huérfana encontrada en {symbol}. Adoptada con éxito. SL asegurado en {sl_price_formatted}.")
         return trade
 
     async def sweep_orphans(self) -> tuple:
