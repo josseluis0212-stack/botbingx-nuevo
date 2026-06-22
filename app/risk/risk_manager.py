@@ -38,18 +38,18 @@ class RiskManager:
         Calcula todos los niveles basados en el ATR y la estrategia.
         """
         if strategy_name == "SUPERTREND_EMA_MTF":
-            sl_atr = 2.5
+            sl_atr = 2.0
             tp_final_atr = 0.0 # No fixed TP
             tp1_atr = 0.0
-            lock_atr = 2.0 # BE trigger
-            lock_sl_atr = 0.0 # Move to entry
-            tp2_atr = 2.5 # Trailing trigger
+            lock_atr = 1.0 # BE trigger
+            lock_sl_atr = 0.2 # Move to 10% profit
+            tp2_atr = 2.0 # Trailing trigger
         else:
             sl_atr = 2.0          # Stop Loss en 2.0 ATR
             tp_final_atr = 4.0    # 100% del recorrido (R:R 1:2)
             
             tp1_atr = round(tp_final_atr * 0.30, 2)   # TP1 (30% de la distancia = 1.2 ATR)
-            lock_atr = round(tp_final_atr * 0.333, 2) # Breakeven Trigger (33.3% de la distancia = ~1.33 ATR)
+            lock_atr = round(tp_final_atr * 0.33, 2) # Breakeven Trigger (33% de la distancia = ~1.32 ATR)
             lock_sl_atr = round(tp_final_atr * 0.15, 2) # Asegurar 15% (0.6 ATR)
             tp2_atr = round(tp_final_atr * 0.60, 2)   # TP2 y Trailing (60% de la distancia = 2.4 ATR)
         
