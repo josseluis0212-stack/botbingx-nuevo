@@ -82,7 +82,7 @@ class RecoveryEngine:
         klines = await self.client.get_klines(symbol, "15m", limit=20)
         atr = entry_price * 0.01 # Default fallback 1%
         if klines and len(klines) > 14:
-            from app.strategy.indicators import compute_atr
+            from app.utils.indicators import compute_atr
             atr = compute_atr(klines, period=14)[-1]
             
         # Calcular SL (2.5 ATR por defecto de protección)
