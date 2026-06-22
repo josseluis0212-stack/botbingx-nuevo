@@ -159,7 +159,9 @@ class AsyncBingXClient:
             except (TypeError, ValueError) as e:
                 logger.warning(f"[get_klines] Skipping malformed kline entry: {k} | {e}")
                 continue
-        return parsed
+        
+        # BingX V3 API returns newest first (descending). Reverse it so index -1 is the current/latest candle.
+        return parsed[::-1]
 
     async def get_positions(self, symbol: str = None):
         params = {}
