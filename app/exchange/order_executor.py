@@ -81,7 +81,7 @@ class OrderExecutionEngine:
         async def _call():
             return await self.client.place_order(
                 symbol=symbol, side=close_side, position_side=pos_side,
-                order_type="STOP_MARKET", quantity=size, stop_price=sl_price, reduce_only=False
+                order_type="STOP_MARKET", quantity=size, stop_price=sl_price, reduce_only=True
             )
 
         res = await self._execute_with_backoff(_call)
@@ -96,7 +96,7 @@ class OrderExecutionEngine:
         async def _call():
             return await self.client.place_order(
                 symbol=symbol, side=close_side, position_side=pos_side,
-                order_type="TAKE_PROFIT_MARKET", quantity=size, stop_price=tp_price, reduce_only=False
+                order_type="TAKE_PROFIT_MARKET", quantity=size, stop_price=tp_price, reduce_only=True
             )
 
         res = await self._execute_with_backoff(_call)
@@ -128,7 +128,7 @@ class OrderExecutionEngine:
         async def _call():
             return await self.client.place_order(
                 symbol=symbol, side=close_side, position_side=pos_side,
-                order_type="MARKET", quantity=size, reduce_only=False
+                order_type="MARKET", quantity=size, reduce_only=True
             )
             
         await self._execute_with_backoff(_call)
