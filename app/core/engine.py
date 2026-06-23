@@ -199,42 +199,9 @@ class Engine:
         atr = selected_signal.get("atr", entry * 0.01) # Fallback to 1% atr if not passed
         
         # ----------------------------------------------------
-        # PRICE ACTION FILTER (VULNERABILITY CHECK)
-        # ----------------------------------------------------
-        from app.risk.price_action import PriceActionFilter
-        from app.risk.risk_manager import RiskManager
-        
-        rm = RiskManager()
-        levels = RiskManager.calculate_levels(entry, atr, signal, strategy_name)
-        math_sl = levels["sl_price"]
-        
-        try:
-            klines = await self.client.get_klines(symbol, "15m", limit=50)
-            if klines and len(klines) >= 40:
-                highs   = [float(k["high"]) for k in klines]
-                lows    = [float(k["low"]) for k in klines]
-                volumes = [float(k.get("volume", 0)) for k in klines]
-                
-                # -- Price Action Vulnerability Check --
-                # El filtro de Price Action aplica para estrategias de reversión/SMC, pero puede bloquear estrategias de momentum puro.
-                is_supertrend = "SUPERTREND" in strategy_name or "ST" in strategy_name
-                
-                if is_supertrend:
-                    logger.info(f"[FILTERS] {symbol} {signal} Bypassing Price Action y Volume filters para estrategia de momentum: {strategy_name}")
-                else:
-                    is_safe = PriceActionFilter.is_trade_safe(symbol, signal, entry, math_sl, highs, lows)
-                    if not is_safe:
-                        return # Reject: SL is structurally exposed
-                
-                # -- Volume Confirmation (per-strategy) --
-                if not is_supertrend:
-                    from app.risk.volume_filter import VolumeFilter
-                    vol_ok = VolumeFilter.is_volume_valid(symbol, signal, strategy_name, klines, volumes)
-                    if not vol_ok:
-                        return # Reject: no institutional volume conviction
-
-        except Exception as e:
-            logger.error(f"[SCANNER] Error en filtros de Price Action/Volumen: {e}")
+        # NATIVE STRUCTURAL RISK ENABLED
+        # Se han eliminado los filtros globales genéricos (PriceActionFilter y VolumeFilter) 
+        # porque cada estrategia ahora calcula sus seguros de forma autónoma y estructural.
         # ----------------------------------------------------
 
         logger.info(f"[SCANNER] FIRE {strategy_name}! {symbol} {signal} @ {entry} (ATR: {atr:.8f})")
