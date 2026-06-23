@@ -106,7 +106,7 @@ class AsyncBingXClient:
                                 continue
 
                     # Don't retry on obvious validation errors like invalid parameters or missing orders
-                    if code in [100400, 100440, 101211, 101215, 100418, 100438]: 
+                    if code in [100400, 100440, 101211, 101215, 100418, 100438, 110411, 110412, 101205]: 
                         return {"success": False, "data": None, "msg": err_msg, "code": code}
                     # For other codes (like rate limits or server errors), continue loop to retry
                 else:
