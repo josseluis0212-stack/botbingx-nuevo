@@ -69,6 +69,10 @@ class RiskManager:
         max_sl_dist = entry_price * 0.085
         if sl_atr * atr > max_sl_dist:
             atr = max_sl_dist / sl_atr
+            
+        from app.config import Config
+        target_roe = 0.15
+        price_change_for_roe = (target_roe / Config.LEVERAGE) * entry_price
         
         # Stop Loss
         if side == "LONG":
@@ -77,14 +81,22 @@ class RiskManager:
             tp1_price = entry_price + (tp1_atr * atr)
             tp2_price = entry_price + (tp2_atr * atr)
             lock_trigger = entry_price + (lock_atr * atr)
-            lock_sl_price = entry_price + (lock_sl_atr * atr)
+            
+            if strategy_name == "SUPERTREND_EMA_MTF_PRO":
+                lock_sl_price = entry_price + price_change_for_roe
+            else:
+                lock_sl_price = entry_price + (lock_sl_atr * atr)
         else:
             sl_price = entry_price + (sl_atr * atr)
             tp_final = entry_price - (tp_final_atr * atr)
             tp1_price = entry_price - (tp1_atr * atr)
             tp2_price = entry_price - (tp2_atr * atr)
             lock_trigger = entry_price - (lock_atr * atr)
-            lock_sl_price = entry_price - (lock_sl_atr * atr)
+            
+            if strategy_name == "SUPERTREND_EMA_MTF_PRO":
+                lock_sl_price = entry_price - price_change_for_roe
+            else:
+                lock_sl_price = entry_price - (lock_sl_atr * atr)
 
         return {
             "sl_price": sl_price,
