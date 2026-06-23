@@ -45,6 +45,7 @@ class RiskManager:
             lock_atr = 2.0 # BE trigger
             lock_sl_atr = 0.0 # Move to entry
             tp2_atr = 2.5 # Trailing trigger
+            trailing_dist_atr = 1.2
         elif strategy_name == "SUPERTREND_EMA_MTF":
             sl_atr = 2.0
             tp_final_atr = 0.0 # No fixed TP
@@ -52,27 +53,31 @@ class RiskManager:
             lock_atr = 1.0 # BE trigger
             lock_sl_atr = 0.2 # Move to 10% profit
             tp2_atr = 2.0 # Trailing trigger
+            trailing_dist_atr = 1.2
         elif "LIQ" in strategy_name or "SWEEP" in strategy_name:
             sl_atr = 1.0          # Ajustado para barridos de liquidez (1:3 max)
             tp_final_atr = 3.0    
-            tp1_atr = 1.5         # TP1 rápido
-            lock_atr = 1.5        # BE Trigger
-            lock_sl_atr = 0.5     # Asegurar 0.5 ATR
+            tp1_atr = 2.0         # TP1 al 2.0
+            lock_atr = 1.0        # BE Trigger muy agresivo
+            lock_sl_atr = 0.1     # Asegurar comisiones
             tp2_atr = 2.0         # Trailing Trigger
+            trailing_dist_atr = 1.0
         elif "AMD" in strategy_name or "BUSTOS" in strategy_name:
-            sl_atr = 1.5          # Holgura estándar para pullbacks (1:3)
-            tp_final_atr = 4.5    
-            tp1_atr = 1.5         # TP1
+            sl_atr = 1.5          # Holgura estándar para pullbacks
+            tp_final_atr = 0.0    # SIN TP FINAL
+            tp1_atr = 0.0         # SIN TP1
             lock_atr = 1.5        # BE Trigger
-            lock_sl_atr = 0.5     # Asegurar 0.5 ATR
-            tp2_atr = 3.0         # Trailing Trigger
+            lock_sl_atr = 0.1     # Asegurar comisiones
+            tp2_atr = 1.5         # Trailing Trigger rápido
+            trailing_dist_atr = 1.5
         elif "FVG" in strategy_name or "OB" in strategy_name:
             sl_atr = 1.5          # Detrás del FVG/OB
-            tp_final_atr = 3.5    
-            tp1_atr = 1.5         # TP1
-            lock_atr = 1.5        # BE Trigger
-            lock_sl_atr = 0.5     # Asegurar 0.5 ATR
-            tp2_atr = 2.5         # Trailing Trigger
+            tp_final_atr = 4.0    
+            tp1_atr = 2.0         # TP1 
+            lock_atr = 2.0        # BE Trigger conservador
+            lock_sl_atr = 0.1     # Asegurar comisiones
+            tp2_atr = 2.0         # Trailing Trigger
+            trailing_dist_atr = 1.5
         else:
             sl_atr = 1.5          # Genérico
             tp_final_atr = 3.0    
@@ -80,6 +85,7 @@ class RiskManager:
             lock_atr = 1.5        
             lock_sl_atr = 0.5     
             tp2_atr = 2.0         
+            trailing_dist_atr = 1.5
         
         # Cap Stop Loss Distance to max 8.5% of entry price (to prevent Liquidation at 10x)
         max_sl_dist = entry_price * 0.085
@@ -120,7 +126,8 @@ class RiskManager:
             "tp1_price": tp1_price,
             "tp2_price": tp2_price,
             "lock_trigger_price": lock_trigger,
-            "lock_sl_price": lock_sl_price
+            "lock_sl_price": lock_sl_price,
+            "trailing_dist_atr": trailing_dist_atr
         }
 
     @staticmethod
@@ -128,11 +135,21 @@ class RiskManager:
         """
         Distribuye la posición según estrategia.
         """
-        if strategy_name in ["SUPERTREND_EMA_MTF", "SUPERTREND_EMA_MTF_PRO"]:
+        if strategy_name in ["SUPERTREND_EMA_MTF", "SUPERTREND_EMA_MTF_PRO"] or "AMD" in strategy_name or "BUSTOS" in strategy_name:
             return {
                 "tp1_qty": 0.0,
                 "tp2_qty": 0.0,
                 "runner_qty": round(total_size, 6)
+            }
+            
+        if "LIQ" in strategy_name or "SWEEP" in strategy_name or "FVG" in strategy_name or "OB" in strategy_name:
+            tp1_qty = round(total_size * 0.50, 6)
+            tp2_qty = 0.0
+            runner_qty = round(total_size - tp1_qty, 6)
+            return {
+                "tp1_qty": tp1_qty,
+                "tp2_qty": tp2_qty,
+                "runner_qty": runner_qty
             }
             
         tp1_qty = round(total_size * 0.30, 6)

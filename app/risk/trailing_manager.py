@@ -8,11 +8,11 @@ class TrailingManager:
     """
 
     @staticmethod
-    def calculate_trailing_stop(side: str, current_price: float, highest_price: float, lowest_price: float, atr: float, current_sl: float, ema21_value: float = None) -> tuple:
+    def calculate_trailing_stop(side: str, current_price: float, highest_price: float, lowest_price: float, atr: float, current_sl: float, ema21_value: float = None, trailing_dist_atr: float = 1.2) -> tuple:
         """
-        Calcula el Trailing Stop oficial de 1.2 ATR o usa la EMA21 si se especifica.
+        Calcula el Trailing Stop oficial dinámico o usa la EMA21 si se especifica.
         """
-        trailing_dist = 1.2 * atr
+        trailing_dist = trailing_dist_atr * atr
         
         # Ensure peaks are initialized
         if highest_price is None or highest_price == 0:

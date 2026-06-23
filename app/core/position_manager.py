@@ -193,13 +193,24 @@ class PositionManager:
                     self._last_sl_retry[symbol] = now
 
             # SI EXISTE INCONSISTENCIA: CORREGIRLA (Restaurar TPs si no ha tocado trailing)
-            if getattr(trade, "strategy", "SMC_PRO") == "SMC_PRO":
+            strategy_name = getattr(trade, "strategy", "SMC_PRO")
+            if "SUPERTREND" not in strategy_name and "AMD" not in strategy_name and "BUSTOS" not in strategy_name:
                 if not trade.trailing_active and not has_tp:
+                    dist = self.risk.calculate_distribution(trade.position_size, strategy_name)
                     # Need to restore either TP1 or TP2 depending on state
-                    target_tp_price = trade.tp2_price if trade.tp1_filled else trade.tp1_price
-                    qty = trade.position_size * 0.30
-                    logger.warning(f"[SUPERVISOR] {symbol} missing TP! Recreating at {target_tp_price}...")
-                    await self.executor.place_take_profit(symbol, trade.side, qty, target_tp_price)
+                    if not trade.tp1_filled and dist["tp1_qty"] > 0:
+                        target_tp_price = trade.tp1_price
+                        qty = dist["tp1_qty"]
+                    elif not trade.tp2_filled and dist["tp2_qty"] > 0:
+                        target_tp_price = trade.tp2_price
+                        qty = dist["tp2_qty"]
+                    else:
+                        target_tp_price = 0
+                        qty = 0
+                        
+                    if target_tp_price > 0:
+                        logger.warning(f"[SUPERVISOR] {symbol} missing TP! Recreating at {target_tp_price}...")
+                        await self.executor.place_take_profit(symbol, trade.side, qty, target_tp_price)
 
     async def _on_mark_price(self, symbol: str, price: float):
         """Procesa ticks de precio en tiempo real y mueve Trailing / Profit Lock."""
@@ -237,30 +248,36 @@ class PositionManager:
             hit_lock = (trade.side == "LONG" and price >= trade.profit_lock_price) or \
                        (trade.side == "SHORT" and price <= trade.profit_lock_price)
             if hit_lock:
+                strategy_name = getattr(trade, "strategy", "SMC_PRO")
+                levels = self.risk.calculate_levels(trade.entry_price, trade.atr, trade.side, strategy_name)
                 logger.info(f"🛡️ [SEGURO ACTIVADO] Breakeven (Colchón) activado en {symbol}. Asegurando ganancia.")
                 trade.profit_lock_active = True
-                trade.stop_loss = self.risk.calculate_levels(trade.entry_price, trade.atr, trade.side)["lock_sl_price"]
+                trade.stop_loss = levels["lock_sl_price"]
                 # Modificar Stop Loss
                 await self.executor.cancel_order(symbol, trade.sl_order_id)
                 trade.sl_order_id = await self.executor.place_stop_loss(symbol, trade.side, trade.remaining_size, trade.stop_loss)
                 changed = True
 
-        # --- 1.5. EVALUAR ACTIVACION DE TRAILING (SUPERTREND_EMA_MTF) ---
-        if getattr(trade, "strategy", "SMC_PRO") in ["SUPERTREND_EMA_MTF", "SUPERTREND_EMA_MTF_PRO"]:
-            if not trade.trailing_active:
-                trailing_trigger = self.risk.calculate_levels(trade.entry_price, trade.atr, trade.side, trade.strategy)["tp2_price"]
+        # --- 1.5. EVALUAR ACTIVACION DE TRAILING ---
+        if not trade.trailing_active:
+            strategy_name = getattr(trade, "strategy", "SMC_PRO")
+            trailing_trigger = self.risk.calculate_levels(trade.entry_price, trade.atr, trade.side, strategy_name)["tp2_price"]
+            if trailing_trigger > 0:
                 hit_trailing = (trade.side == "LONG" and price >= trailing_trigger) or \
                                (trade.side == "SHORT" and price <= trailing_trigger)
                 if hit_trailing:
-                    logger.info(f"🛡️ [SEGURO ACTIVADO] Trailing Stop Dinámico activado en {symbol}.")
+                    logger.info(f"🛡️ [SEGURO ACTIVADO] Trailing Stop activado en {symbol} al tocar el trigger.")
                     trade.trailing_active = True
                     changed = True
 
         # --- 2. EVALUAR TRAILING STOP ---
         if trade.trailing_active:
-            dynamic_ema21 = getattr(trade, "dynamic_ema21", None) if getattr(trade, "strategy", "SMC_PRO") in ["SUPERTREND_EMA_MTF", "SUPERTREND_EMA_MTF_PRO"] else None
+            strategy_name = getattr(trade, "strategy", "SMC_PRO")
+            dynamic_ema21 = getattr(trade, "dynamic_ema21", None) if strategy_name in ["SUPERTREND_EMA_MTF", "SUPERTREND_EMA_MTF_PRO"] else None
+            levels = self.risk.calculate_levels(trade.entry_price, trade.atr, trade.side, strategy_name)
+            
             new_sl, new_high, new_low = self.trailing.calculate_trailing_stop(
-                trade.side, price, trade.highest_price, trade.lowest_price, trade.atr, trade.stop_loss, ema21_value=dynamic_ema21
+                trade.side, price, trade.highest_price, trade.lowest_price, trade.atr, trade.stop_loss, ema21_value=dynamic_ema21, trailing_dist_atr=levels.get("trailing_dist_atr", 1.2)
             )
             if new_high != trade.highest_price or new_low != trade.lowest_price:
                 trade.highest_price = new_high
@@ -288,23 +305,45 @@ class PositionManager:
 
         if o_type == "TAKE_PROFIT_MARKET":
             if not trade.tp1_filled:
-                logger.info(f"[TP1 FILLED] {symbol} 30% cerrado.")
+                dist = self.risk.calculate_distribution(trade.position_size, getattr(trade, "strategy", "SMC_PRO"))
+                logger.info(f"[TP1 FILLED] {symbol} TP1 cerrado.")
                 trade.tp1_filled = True
-                trade.remaining_size = trade.position_size * 0.70
-                # Se ejecutará automáticamente el TP2 (ya debería estar la orden en el exchange o el supervisor la pone)
+                trade.remaining_size = trade.position_size - dist["tp1_qty"]
+                
+                # If there's no TP2, activate trailing immediately
+                if dist["tp2_qty"] == 0.0:
+                    trade.trailing_active = True
+                    trade.tp2_filled = True # Virtual fill
+                    await self.client.cancel_all_orders(symbol)
+                    trade.highest_price = price_filled
+                    trade.lowest_price = price_filled
+                    
+                    strategy_name = getattr(trade, "strategy", "SMC_PRO")
+                    levels = self.risk.calculate_levels(trade.entry_price, trade.atr, trade.side, strategy_name)
+                    new_sl, _, _ = self.trailing.calculate_trailing_stop(
+                        trade.side, price_filled, trade.highest_price, trade.lowest_price, trade.atr, trade.stop_loss, trailing_dist_atr=levels.get("trailing_dist_atr", 1.2)
+                    )
+                    trade.stop_loss = new_sl
+                    trade.sl_order_id = await self.executor.place_stop_loss(symbol, trade.side, trade.remaining_size, trade.stop_loss)
+
             elif not trade.tp2_filled:
-                logger.info(f"[TP2 FILLED] {symbol} otro 30% cerrado. ACTIVANDO TRAILING.")
+                dist = self.risk.calculate_distribution(trade.position_size, getattr(trade, "strategy", "SMC_PRO"))
+                logger.info(f"[TP2 FILLED] {symbol} TP2 cerrado. ACTIVANDO TRAILING.")
                 trade.tp2_filled = True
                 trade.trailing_active = True
-                trade.remaining_size = trade.position_size * 0.40
-                # Cancelar órdenes pendientes y ajustar SL al 40% restante con trailing
+                trade.remaining_size = trade.position_size - dist["tp1_qty"] - dist["tp2_qty"]
+                # Cancelar órdenes pendientes y ajustar SL al restante con trailing
                 await self.client.cancel_all_orders(symbol)
                 # IniciaTrailing base: highest/lowest
                 trade.highest_price = price_filled
                 trade.lowest_price = price_filled
-                dynamic_ema21 = getattr(trade, "dynamic_ema21", None) if getattr(trade, "strategy", "SMC_PRO") in ["SUPERTREND_EMA_MTF", "SUPERTREND_EMA_MTF_PRO"] else None
+                
+                strategy_name = getattr(trade, "strategy", "SMC_PRO")
+                levels = self.risk.calculate_levels(trade.entry_price, trade.atr, trade.side, strategy_name)
+                
+                dynamic_ema21 = getattr(trade, "dynamic_ema21", None) if "SUPERTREND" in strategy_name else None
                 new_sl, _, _ = self.trailing.calculate_trailing_stop(
-                    trade.side, price_filled, trade.highest_price, trade.lowest_price, trade.atr, trade.stop_loss, ema21_value=dynamic_ema21
+                    trade.side, price_filled, trade.highest_price, trade.lowest_price, trade.atr, trade.stop_loss, ema21_value=dynamic_ema21, trailing_dist_atr=levels.get("trailing_dist_atr", 1.2)
                 )
                 trade.stop_loss = new_sl
                 trade.sl_order_id = await self.executor.place_stop_loss(symbol, trade.side, trade.remaining_size, trade.stop_loss)
