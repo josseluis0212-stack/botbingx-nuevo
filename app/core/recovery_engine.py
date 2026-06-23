@@ -91,17 +91,32 @@ class RecoveryEngine:
             if len(atr_list) > 0:
                 atr = atr_list[-1]
             
-        # Calcular SL (2.5 ATR por defecto de protección)
-        sl_price = entry_price - (atr * 2.5) if side == "LONG" else entry_price + (atr * 2.5)
+        # --- INTELIGENCIA DEDUCTIVA (Sherlock Holmes) ---
+        open_orders = await self.client.get_open_orders(symbol)
         
+        has_tp = False
+        for o in open_orders:
+            order_type = o.get('type', '').upper()
+            # Si vemos órdenes de toma de ganancia (incluyendo LIMITs que suelen ser TPs)
+            if order_type in ['TAKE_PROFIT_MARKET', 'TAKE_PROFIT', 'LIMIT']:
+                has_tp = True
+                break
+                
+        if has_tp:
+            strategy_name = "SMC_PRO"
+            logger.info(f"🕵️‍♂️ [ADOPCIÓN SHERLOCK] Detectadas órdenes de Take Profit. Deduciendo estrategia: SMC_PRO para {symbol}")
+        else:
+            strategy_name = "SUPERTREND_EMA_MTF_PRO"
+            logger.info(f"🕵️‍♂️ [ADOPCIÓN SHERLOCK] No hay órdenes de Take Profit. Deduciendo estrategia de tendencia: SUPERTREND_EMA_MTF_PRO para {symbol}")
+            
         from app.exchange.order_executor import OrderExecutionEngine
         from app.risk.risk_manager import RiskManager
         
         executor = OrderExecutionEngine(self.client)
         
-        # Calcular SL y TP usando la lógica de SMC_PRO (30/30/40) para huérfanas
-        levels = RiskManager.calculate_levels(entry_price, atr, side, "SMC_PRO")
-        dist = RiskManager.calculate_distribution(size, "SMC_PRO")
+        # Reconstruimos el ADN matemático basado en la deducción
+        levels = RiskManager.calculate_levels(entry_price, atr, side, strategy_name)
+        dist = RiskManager.calculate_distribution(size, strategy_name)
         
         # --- LÓGICA DINÁMICA DE ADOPCIÓN ---
         ticker = await self.client.get_ticker(symbol)
@@ -148,7 +163,7 @@ class RecoveryEngine:
         if tp2_qty > 0:
             await executor.place_take_profit(symbol, side, tp2_qty, levels["tp2_price"])
 
-        # Guardar en BD con estrategia "ADOPTED"
+        # Guardar en BD con la estrategia deducida
         import uuid
         trade = TradeState(
             trade_id=str(uuid.uuid4()), symbol=symbol, side=side, entry_price=entry_price,
@@ -156,7 +171,7 @@ class RecoveryEngine:
             tp1_price=levels["tp1_price"], tp2_price=levels["tp2_price"],
             profit_lock_price=levels["lock_trigger_price"],
             remaining_size=size, sl_order_id=sl_id,
-            strategy="ADOPTED"
+            strategy=strategy_name
         )
         await self.repo.save_trade(trade)
         logger.info(f"🤝 [ADOPCIÓN EXITOSA] Operación huérfana encontrada en {symbol}. Adoptada con éxito. SL asegurado en {sl_price_formatted}.")
