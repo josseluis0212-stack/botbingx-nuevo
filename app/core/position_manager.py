@@ -252,11 +252,17 @@ class PositionManager:
                 levels = self.risk.calculate_levels(trade.entry_price, trade.atr, trade.side, strategy_name)
                 logger.info(f"🛡️ [SEGURO ACTIVADO] Breakeven (Colchón) activado en {symbol}. Asegurando ganancia.")
                 trade.profit_lock_active = True
-                trade.stop_loss = getattr(trade, "structural_lock_sl_price", levels["lock_sl_price"])
-                # Modificar Stop Loss
-                await self.executor.cancel_order(symbol, trade.sl_order_id)
-                trade.sl_order_id = await self.executor.place_stop_loss(symbol, trade.side, trade.remaining_size, trade.stop_loss)
-                changed = True
+                new_sl = getattr(trade, "structural_lock_sl_price", levels["lock_sl_price"])
+                success = True
+                if trade.sl_order_id:
+                    success = await self.executor.cancel_order(symbol, trade.sl_order_id)
+                
+                if success:
+                    trade.stop_loss = new_sl
+                    trade.sl_order_id = await self.executor.place_stop_loss(symbol, trade.side, trade.remaining_size, trade.stop_loss)
+                    changed = True
+                else:
+                    logger.warning(f"[PROFIT LOCK] Rate Limit. No se pudo cancelar el SL anterior de {symbol}. Se intentará en el próximo tick.")
 
         # --- 1.5. EVALUAR ACTIVACION DE TRAILING ---
         if not trade.trailing_active:
@@ -286,11 +292,17 @@ class PositionManager:
                 changed = True
 
             if new_sl != trade.stop_loss:
-                logger.info(f"[TRAILING] {symbol} moviendo SL a {new_sl:.6f}.")
-                trade.stop_loss = new_sl
-                await self.executor.cancel_order(symbol, trade.sl_order_id)
-                trade.sl_order_id = await self.executor.place_stop_loss(symbol, trade.side, trade.remaining_size, trade.stop_loss)
-                changed = True
+                success = True
+                if trade.sl_order_id:
+                    success = await self.executor.cancel_order(symbol, trade.sl_order_id)
+                
+                if success:
+                    logger.info(f"[TRAILING] {symbol} moviendo SL a {new_sl:.6f}.")
+                    trade.stop_loss = new_sl
+                    trade.sl_order_id = await self.executor.place_stop_loss(symbol, trade.side, trade.remaining_size, trade.stop_loss)
+                    changed = True
+                else:
+                    logger.warning(f"[TRAILING] Rate Limit. No se pudo cancelar el SL anterior de {symbol}. Se intentará en el próximo tick.")
 
         if changed:
             await self.repo.save_trade(trade)

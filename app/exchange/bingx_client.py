@@ -168,7 +168,10 @@ class AsyncBingXClient:
         if symbol:
             params["symbol"] = symbol.upper()
         res = await self._request("GET", "/openApi/swap/v2/user/positions", params=params, signed=True)
-        return res.get("data", [])
+        if not res.get("success"):
+            return []
+        data = res.get("data")
+        return data if data is not None else []
 
     async def get_ticker(self, symbol: str) -> dict:
         """Fetch ticker details (lastPrice, askPrice, bidPrice) for a symbol."""
