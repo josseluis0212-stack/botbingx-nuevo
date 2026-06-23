@@ -23,14 +23,10 @@ class RiskManager:
     def calculate_position_size(self, entry_price: float, stop_distance: float = 0.0, strategy_name: str = "SMC_PRO", account_balance: float = 0.0) -> float:
         """
         Tamaño dinámico para PRO (Riesgo 1%) o estático para SMC.
+        Ahora modificado para usar un apalancamiento fijo (15 USDT al 10x = 150 USDT volumen).
         """
         if entry_price <= 0:
             return 0.0
-
-        if strategy_name == "SUPERTREND_EMA_MTF_PRO" and stop_distance > 0 and account_balance > 0:
-            risk_amount = account_balance * 0.01  # 1% risk
-            size = risk_amount / stop_distance
-            return round(size, 6)
 
         total_volume = self.position_margin * self.leverage
         size = total_volume / entry_price
