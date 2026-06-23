@@ -63,11 +63,11 @@ class VolumeFilter:
         # Para SHORT (barrido de highs): verificar mecha superior
         rejection_wick = lower_wick if side == "LONG" else upper_wick
 
-        if ratio < 1.1:
-            logger.warning(f"[VOL:LIQ_SWEEP] {symbol} {side} RECHAZADO — Spike de volumen insuficiente: {ratio:.2f}x (mínimo 1.1x)")
+        if ratio < 1.5:
+            logger.warning(f"[VOL:LIQ_SWEEP] {symbol} {side} RECHAZADO — Spike de volumen insuficiente: {ratio:.2f}x (mínimo 1.5x)")
             return False
-        if rejection_wick < 0.25:
-            logger.warning(f"[VOL:LIQ_SWEEP] {symbol} {side} RECHAZADO — Mecha de rechazo débil: {rejection_wick:.1%} (mínimo 25%)")
+        if rejection_wick < 0.40:
+            logger.warning(f"[VOL:LIQ_SWEEP] {symbol} {side} RECHAZADO — Mecha de rechazo débil: {rejection_wick:.1%} (mínimo 40%)")
             return False
 
         logger.info(f"[VOL:LIQ_SWEEP] {symbol} {side} ✅ Vol={ratio:.2f}x | Mecha={rejection_wick:.1%}")
@@ -88,8 +88,8 @@ class VolumeFilter:
         candle = klines[-1]
         body = VolumeFilter._body_ratio(candle)
 
-        if ratio < 0.8 or ratio > 5.0:
-            logger.warning(f"[VOL:FVG] {symbol} {side} RECHAZADO — Volumen fuera de rango: {ratio:.2f}x (esperado 0.8x–5.0x)")
+        if ratio < 0.4 or ratio > 3.0:
+            logger.warning(f"[VOL:FVG] {symbol} {side} RECHAZADO — Volumen fuera de rango: {ratio:.2f}x (esperado 0.4x–3.0x)")
             return False
         if body < 0.30:
             logger.warning(f"[VOL:FVG] {symbol} {side} RECHAZADO — Cuerpo de vela insuficiente: {body:.1%} (mínimo 30%). Mecha domina.")
@@ -116,11 +116,11 @@ class VolumeFilter:
         arrival_ratio   = arrival_vol   / avg
         rejection_ratio = rejection_vol / avg
 
-        if arrival_ratio > 1.5:
-            logger.warning(f"[VOL:OB_RETEST] {symbol} {side} RECHAZADO — Llegada al OB con demasiado volumen: {arrival_ratio:.2f}x (esperado ≤ 1.5x, precio 'agotado' es sospechoso)")
+        if arrival_ratio > 1.2:
+            logger.warning(f"[VOL:OB_RETEST] {symbol} {side} RECHAZADO — Llegada al OB con demasiado volumen: {arrival_ratio:.2f}x (esperado ≤ 1.2x, precio 'agotado' es sospechoso)")
             return False
-        if rejection_ratio < 1.1:
-            logger.warning(f"[VOL:OB_RETEST] {symbol} {side} RECHAZADO — Rebote débil desde el OB: {rejection_ratio:.2f}x (esperado ≥ 1.1x. Sin defensa institucional.)")
+        if rejection_ratio < 1.25:
+            logger.warning(f"[VOL:OB_RETEST] {symbol} {side} RECHAZADO — Rebote débil desde el OB: {rejection_ratio:.2f}x (esperado ≥ 1.25x. Sin defensa institucional.)")
             return False
 
         logger.info(f"[VOL:OB_RETEST] {symbol} {side} ✅ Llegada={arrival_ratio:.2f}x (silenciosa) | Rebote={rejection_ratio:.2f}x (explosivo)")
@@ -157,11 +157,11 @@ class VolumeFilter:
         else:
             compressed = True  # No hay datos suficientes, asumir válido
 
-        if sweep_ratio < 1.75:
-            logger.warning(f"[VOL:AMD] {symbol} {side} RECHAZADO — Sweep sin volumen institucional: {sweep_ratio:.2f}x (mínimo 1.75x)")
+        if sweep_ratio < 1.8:
+            logger.warning(f"[VOL:AMD] {symbol} {side} RECHAZADO — Sweep sin volumen institucional: {sweep_ratio:.2f}x (mínimo 1.8x)")
             return False
-        if dist_ratio < 1.2:
-            logger.warning(f"[VOL:AMD] {symbol} {side} RECHAZADO — Distribución débil: {dist_ratio:.2f}x (mínimo 1.2x)")
+        if dist_ratio < 1.3:
+            logger.warning(f"[VOL:AMD] {symbol} {side} RECHAZADO — Distribución débil: {dist_ratio:.2f}x (mínimo 1.3x)")
             return False
         if not compressed:
             logger.warning(f"[VOL:AMD] {symbol} {side} RECHAZADO — Sin rango comprimido previo. Patrón AMD no válido.")

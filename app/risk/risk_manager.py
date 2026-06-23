@@ -52,14 +52,34 @@ class RiskManager:
             lock_atr = 1.0 # BE trigger
             lock_sl_atr = 0.2 # Move to 10% profit
             tp2_atr = 2.0 # Trailing trigger
+        elif "LIQ" in strategy_name or "SWEEP" in strategy_name:
+            sl_atr = 1.0          # Ajustado para barridos de liquidez (1:3 max)
+            tp_final_atr = 3.0    
+            tp1_atr = 1.5         # TP1 rápido
+            lock_atr = 1.5        # BE Trigger
+            lock_sl_atr = 0.5     # Asegurar 0.5 ATR
+            tp2_atr = 2.0         # Trailing Trigger
+        elif "AMD" in strategy_name or "BUSTOS" in strategy_name:
+            sl_atr = 1.5          # Holgura estándar para pullbacks (1:3)
+            tp_final_atr = 4.5    
+            tp1_atr = 1.5         # TP1
+            lock_atr = 1.5        # BE Trigger
+            lock_sl_atr = 0.5     # Asegurar 0.5 ATR
+            tp2_atr = 3.0         # Trailing Trigger
+        elif "FVG" in strategy_name or "OB" in strategy_name:
+            sl_atr = 1.5          # Detrás del FVG/OB
+            tp_final_atr = 3.5    
+            tp1_atr = 1.5         # TP1
+            lock_atr = 1.5        # BE Trigger
+            lock_sl_atr = 0.5     # Asegurar 0.5 ATR
+            tp2_atr = 2.5         # Trailing Trigger
         else:
-            sl_atr = 2.0          # Stop Loss en 2.0 ATR
-            tp_final_atr = 4.0    # 100% del recorrido (R:R 1:2)
-            
-            tp1_atr = round(tp_final_atr * 0.30, 2)   # TP1 (30% de la distancia = 1.2 ATR)
-            lock_atr = round(tp_final_atr * 0.33, 2) # Breakeven Trigger (33% de la distancia = ~1.32 ATR)
-            lock_sl_atr = round(tp_final_atr * 0.10, 2) # Asegurar 10% (0.4 ATR)
-            tp2_atr = round(tp_final_atr * 0.60, 2)   # TP2 y Trailing (60% de la distancia = 2.4 ATR)
+            sl_atr = 1.5          # Genérico
+            tp_final_atr = 3.0    
+            tp1_atr = 1.5         
+            lock_atr = 1.5        
+            lock_sl_atr = 0.5     
+            tp2_atr = 2.0         
         
         # Cap Stop Loss Distance to max 8.5% of entry price (to prevent Liquidation at 10x)
         max_sl_dist = entry_price * 0.085
