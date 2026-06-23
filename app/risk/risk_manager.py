@@ -142,10 +142,10 @@ class RiskManager:
                 "runner_qty": round(total_size, 6)
             }
             
-        if "LIQ" in strategy_name or "SWEEP" in strategy_name or "FVG" in strategy_name or "OB" in strategy_name:
-            tp1_qty = round(total_size * 0.50, 6)
+        if "LIQ" in strategy_name or "SWEEP" in strategy_name or "FVG" in strategy_name or "OB" in strategy_name or "SMC_PRO" in strategy_name:
+            tp1_qty = round(total_size, 6) # 100% al target estructural
             tp2_qty = 0.0
-            runner_qty = round(total_size - tp1_qty, 6)
+            runner_qty = 0.0
             return {
                 "tp1_qty": tp1_qty,
                 "tp2_qty": tp2_qty,

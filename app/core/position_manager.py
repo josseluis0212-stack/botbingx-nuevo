@@ -311,22 +311,30 @@ class PositionManager:
                 trade.tp1_filled = True
                 trade.remaining_size = trade.position_size - dist["tp1_qty"]
                 
-                # If there's no TP2, activate trailing immediately
-                if dist["tp2_qty"] == 0.0:
-                    trade.trailing_active = True
-                    trade.tp2_filled = True # Virtual fill
-                    await self.client.cancel_all_orders(symbol)
-                    trade.highest_price = price_filled
-                    trade.lowest_price = price_filled
-                    
-                    strategy_name = getattr(trade, "strategy", "SMC_PRO")
-                    levels = self.risk.calculate_levels(trade.entry_price, trade.atr, trade.side, strategy_name)
-                    trail_dist = getattr(trade, "structural_trailing_dist_atr", levels.get("trailing_dist_atr", 1.2))
-                    new_sl, _, _ = self.trailing.calculate_trailing_stop(
-                        trade.side, price_filled, trade.highest_price, trade.lowest_price, trade.atr, trade.stop_loss, trailing_dist_atr=trail_dist
-                    )
-                    trade.stop_loss = new_sl
-                    trade.sl_order_id = await self.executor.place_stop_loss(symbol, trade.side, trade.remaining_size, trade.stop_loss)
+                if trade.remaining_size <= 0.0001:
+                    logger.info(f"🟢 [CERRANDO OPERACIÓN] {symbol} completada con ÉXITO ESTRUCTURAL al tocar Take Profit Final. PNL asegurado.")
+                    trade.position_closed = True
+                    await self.repo.mark_position_closed(symbol)
+                    self.trades.pop(symbol, None)
+                    from app.notifications.telegram import notifier
+                    asyncio.create_task(notifier.notify_close(symbol, trade.side, "Estructural Take Profit Hit (100%)"))
+                else:
+                    # If there's no TP2, activate trailing immediately
+                    if dist["tp2_qty"] == 0.0:
+                        trade.trailing_active = True
+                        trade.tp2_filled = True # Virtual fill
+                        await self.client.cancel_all_orders(symbol)
+                        trade.highest_price = price_filled
+                        trade.lowest_price = price_filled
+                        
+                        strategy_name = getattr(trade, "strategy", "SMC_PRO")
+                        levels = self.risk.calculate_levels(trade.entry_price, trade.atr, trade.side, strategy_name)
+                        trail_dist = getattr(trade, "structural_trailing_dist_atr", levels.get("trailing_dist_atr", 1.2))
+                        new_sl, _, _ = self.trailing.calculate_trailing_stop(
+                            trade.side, price_filled, trade.highest_price, trade.lowest_price, trade.atr, trade.stop_loss, trailing_dist_atr=trail_dist
+                        )
+                        trade.stop_loss = new_sl
+                        trade.sl_order_id = await self.executor.place_stop_loss(symbol, trade.side, trade.remaining_size, trade.stop_loss)
 
             elif not trade.tp2_filled:
                 dist = self.risk.calculate_distribution(trade.position_size, getattr(trade, "strategy", "SMC_PRO"))
