@@ -442,12 +442,10 @@ class PositionManager:
                         tp1_price=levels["tp1_price"], tp2_price=levels["tp2_price"],
                         profit_lock_price=levels["lock_trigger_price"],
                         remaining_size=actual_filled_size, sl_order_id=sl_id,
-                        strategy=strategy_name
+                        strategy=strategy_name,
+                        structural_lock_sl_price=levels["lock_sl_price"],
+                        structural_trailing_dist_atr=levels["trailing_dist_atr"]
                     )
-                    trade.dynamic_ema21 = trailing_dist_atr # Temporary hack to pass trailing dist to the TradeState object? No, we should just use levels["trailing_dist_atr"] in _on_mark_price by calling risk_manager. But risk_manager won't know the structural dist!
-                    # Wait! TradeState needs to store lock_sl_price and trailing_dist_atr because they might be structural!
-                    setattr(trade, "structural_lock_sl_price", levels["lock_sl_price"])
-                    setattr(trade, "structural_trailing_dist_atr", levels["trailing_dist_atr"])
                     await self.repo.save_trade(trade)
                     self.trades[symbol] = trade
                     await self.sync.subscribe_mark_price(symbol)

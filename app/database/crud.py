@@ -20,6 +20,13 @@ async def init_db():
             await conn.execute(text("ALTER TABLE trade_state ADD COLUMN strategy VARCHAR DEFAULT 'SMC_PRO'"))
         except:
             pass
+            
+        try:
+            from sqlalchemy import text
+            await conn.execute(text("ALTER TABLE trade_state ADD COLUMN structural_lock_sl_price FLOAT DEFAULT NULL"))
+            await conn.execute(text("ALTER TABLE trade_state ADD COLUMN structural_trailing_dist_atr FLOAT DEFAULT NULL"))
+        except:
+            pass
 
 class TradeStateRepository:
     """Handles persistence of open position states safely and robustly."""

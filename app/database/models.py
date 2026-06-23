@@ -22,6 +22,10 @@ class TradeState(Base):
     remaining_size = Column(Float, nullable=False)
     strategy = Column(String, default="SMC_PRO")
     
+    # Structural Risk Management Parameters
+    structural_lock_sl_price = Column(Float, nullable=True)
+    structural_trailing_dist_atr = Column(Float, nullable=True)
+    
     tp1_filled = Column(Boolean, default=False)
     tp2_filled = Column(Boolean, default=False)
     profit_lock_active = Column(Boolean, default=False)
