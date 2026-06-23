@@ -165,7 +165,9 @@ class Engine:
         if await is_on_cooldown(symbol):
             return
 
-        sweep_result = await evaluate_smc_pro(self.client, symbol)
+        # Paused SMC and others to isolate and test SuperTrend EMA MTF Pro
+        # sweep_result = await evaluate_smc_pro(self.client, symbol)
+        sweep_result = {"signal": "NONE"}
         
         # Multi-Strategy Engine: Evaluate in sequence (waterfall)
         selected_signal = None
@@ -180,12 +182,14 @@ class Engine:
                 selected_signal = sweep_st
                 strategy_name = sweep_st.get("strategy", "SUPERTREND_EMA_MTF_PRO")
             else:
-                sweep_bustos = await evaluate_bustos_pullback(self.client, symbol)
+                # sweep_bustos = await evaluate_bustos_pullback(self.client, symbol)
+                sweep_bustos = {"signal": "NONE"}
                 if sweep_bustos["signal"] != "NONE":
                     selected_signal = sweep_bustos
                     strategy_name = sweep_bustos.get("strategy", "BUSTOS_PULLBACK")
                 else:
-                    sweep_liquidity = await evaluate_liquidity_sweep(self.client, symbol)
+                    # sweep_liquidity = await evaluate_liquidity_sweep(self.client, symbol)
+                    sweep_liquidity = {"signal": "NONE"}
                     if sweep_liquidity["signal"] != "NONE":
                         selected_signal = sweep_liquidity
                         strategy_name = sweep_liquidity.get("strategy", "LIQUIDITY_SWEEP")
