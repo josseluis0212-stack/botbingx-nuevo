@@ -21,12 +21,14 @@ def detect_fvgs(candles: list, vol_sma: list) -> list:
                 fvgs.append({"type": "SHORT", "top": c1["low"], "bottom": c3["high"], "index": i})
     return fvgs
 
-def detect_orderblocks(candles: list, vol_sma: list) -> list:
+def detect_orderblocks(candles: list, vol_sma: list, atr: float = 0.0) -> list:
     """Finds valid Orderblocks with strong displacement."""
     obs = []
     for i in range(1, len(candles) - 2):
         c_prev, c_curr, c_next = candles[i-1], candles[i], candles[i+1]
-        impulse_threshold = 0.005 # 0.5% move
+        
+        # Dynamic impulse threshold based on 1.5x ATR (Adapts to volatility)
+        impulse_threshold = (atr / c_curr["close"]) * 1.5 if atr and c_curr["close"] > 0 else 0.005 
         
         has_volume = c_next.get("volume", 0) > vol_sma[i+1]
         
@@ -116,22 +118,23 @@ async def analyze(client: AsyncBingXClient, symbol: str) -> dict:
     # SETUP 2 & 3: FVG / OB Mitigation (Volume Confirmed)
     # ----------------------------------------------------
     fvgs = detect_fvgs(recent_20, vol_sma_20)
-    obs = detect_orderblocks(recent_20, vol_sma_20)
+    obs = detect_orderblocks(recent_20, vol_sma_20, atr)
     
     for fvg in fvgs:
         if is_uptrend and fvg["type"] == "LONG":
             if last_closed["low"] <= fvg["top"] and last_closed["close"] > fvg["bottom"]:
-                setups.append({
-                    "signal": "LONG", "strategy": "SMC_FVG_TAP",
-                    "entry": current_price, "sl": fvg["bottom"] - (0.2 * atr)
-                })
+                if rsi_val < 50: # Confirmation: RSI exhaustion (not overbought)
+                    setups.append({
+                        "signal": "LONG", "strategy": "SMC_FVG_TAP",
+                        "entry": current_price, "sl": fvg["bottom"] - (0.2 * atr)
+                    })
         elif is_downtrend and fvg["type"] == "SHORT":
             if last_closed["high"] >= fvg["bottom"] and last_closed["close"] < fvg["top"]:
-                setups.append({
-                    "signal": "SHORT", "strategy": "SMC_FVG_TAP",
-                    "entry": current_price, "sl": fvg["top"] + (0.2 * atr)
-                })
-                
+                if rsi_val > 50: # Confirmation: RSI exhaustion (not oversold)
+                    setups.append({
+                        "signal": "SHORT", "strategy": "SMC_FVG_TAP",
+                        "entry": current_price, "sl": fvg["top"] + (0.2 * atr)
+                    })
     for ob in obs:
         if is_uptrend and ob["type"] == "LONG":
             if last_closed["low"] <= ob["top"] and last_closed["close"] > ob["top"]:

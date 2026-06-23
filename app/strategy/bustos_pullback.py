@@ -1,4 +1,4 @@
-from app.utils.indicators import calculate_ema, calculate_sma, calculate_atr, calculate_adx
+from app.utils.indicators import calculate_ema, calculate_sma, calculate_atr, calculate_adx, calculate_rsi
 from app.config import Config
 
 async def evaluate_bustos_pullback(client, symbol: str) -> dict:
@@ -37,6 +37,9 @@ async def evaluate_bustos_pullback(client, symbol: str) -> dict:
     adx_val = adx_list[-1] if adx_list else 0
     has_strength = adx_val > 20
     
+    rsi_list = calculate_rsi(closes_15m, 14)
+    rsi_val = rsi_list[-1] if rsi_list else 50
+    
     volumes_15m = [c["volume"] for c in klines_15m]
     sma_vol_10 = calculate_sma(volumes_15m, 10)[-1]
     
@@ -58,7 +61,8 @@ async def evaluate_bustos_pullback(client, symbol: str) -> dict:
         if current_ema21 > sma50_15m and current_ema21 > old_ema21:
             # Pullback a la EMA 21 con rechazo alcista y volumen alto
             if c["low"] <= current_ema21 and c["close"] > current_ema21 and c["close"] > c["open"] and c["volume"] > sma_vol_10:
-                entry_price = c["close"]  # Entramos al mercado inmediatamente
+                if rsi_val < 65: # Prevent buying when locally overbought
+                    entry_price = c["close"]  # Entramos al mercado inmediatamente
                 sl_price = sma50_15m - (atr_15m * 1.5)  # SL adaptativo debajo de la SMA 50
                 
                 # Buscar el máximo reciente (Take Profit)
@@ -76,7 +80,8 @@ async def evaluate_bustos_pullback(client, symbol: str) -> dict:
         if current_ema21 < sma50_15m and current_ema21 < old_ema21:
             # Pullback a la EMA 21 con rechazo bajista y volumen alto
             if c["high"] >= current_ema21 and c["close"] < current_ema21 and c["close"] < c["open"] and c["volume"] > sma_vol_10:
-                entry_price = c["close"]
+                if rsi_val > 35: # Prevent shorting when locally oversold
+                    entry_price = c["close"]
                 sl_price = sma50_15m + (atr_15m * 1.5)  # SL adaptativo encima de la SMA 50
                 
                 # Buscar el mínimo reciente (Take Profit)

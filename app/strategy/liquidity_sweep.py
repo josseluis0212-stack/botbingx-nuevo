@@ -30,6 +30,11 @@ def detect_sweep(candles):
         tr = max(h - l, abs(h - pc), abs(l - pc))
         tr_list.append(tr)
     atr = sum(tr_list) / len(tr_list) if tr_list else 0
+    
+    closes = [c["close"] for c in candles]
+    from app.utils.indicators import calculate_rsi
+    rsi_list = calculate_rsi(closes, 14)
+    rsi_val = rsi_list[-2] if rsi_list else 50 # Sweep candle's RSI
 
     # Calculate wick and body for the sweep candle
     sweep_body = abs(sweep["open"] - sweep["close"])
@@ -37,7 +42,8 @@ def detect_sweep(candles):
     sweep_upper_wick = sweep["high"] - max(sweep["open"], sweep["close"])
 
     # LONG condition
-    if sweep["low"] < lookback_lows and confirm["close"] > sweep["low"] and sweep_lower_wick >= sweep_body:
+    # Require strong wick rejection (wick >= 1.5x body) and RSI exhaustion (RSI < 40)
+    if sweep["low"] < lookback_lows and confirm["close"] > sweep["low"] and sweep_lower_wick >= sweep_body * 1.5 and rsi_val < 40:
         # Structural SL: Sweep Low - 0.5 ATR
         sl_price = sweep["low"] - (0.5 * atr)
         
@@ -60,8 +66,8 @@ def detect_sweep(candles):
         
     # SHORT condition
     # Require upper wick to be significantly larger than the body to confirm a true rejection
-    # Require upper wick to be at least the size of the body
-    if sweep["high"] > lookback_highs and confirm["close"] < sweep["high"] and sweep_upper_wick >= sweep_body:
+    # Require upper wick to be at least 1.5x the size of the body, and RSI > 60
+    if sweep["high"] > lookback_highs and confirm["close"] < sweep["high"] and sweep_upper_wick >= sweep_body * 1.5 and rsi_val > 60:
         # Structural SL: Sweep High + 0.5 ATR
         sl_price = sweep["high"] + (0.5 * atr)
         
