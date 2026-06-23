@@ -84,8 +84,8 @@ class Engine:
         while self.running:
             await asyncio.sleep(300) # Check every 5 minutes
             if self.running:
-                ghosts = await self.recovery.sweep_orphans()
-                for sym in ghosts:
+                ghosts_cleaned, adopted = await self.recovery.sweep_orphans()
+                for sym in ghosts_cleaned:
                     if sym in self.position_manager.trades:
                         logger.info(f"[ENGINE] Sincronizando dashboard: Removiendo trade fantasma {sym} de memoria.")
                         del self.position_manager.trades[sym]

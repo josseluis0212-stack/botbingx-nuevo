@@ -91,6 +91,9 @@ async def analyze(client: AsyncBingXClient, symbol: str) -> dict:
     last_closed = recent_20[-1]
     vol_sma_20 = vol_sma_15m[-20:]
     
+    highest_20 = max([k["high"] for k in recent_20])
+    lowest_20 = min([k["low"] for k in recent_20])
+    
     # ----------------------------------------------------
     # SETUP 1: AMD (Sweep + BOS) - Requires ADX Momentum
     # ----------------------------------------------------
