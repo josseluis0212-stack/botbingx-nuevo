@@ -9,7 +9,7 @@ class Config:
     DEMO_MODE = os.getenv("DEMO_MODE", "true").lower() == "true"
     TIMEFRAME = os.getenv("TIMEFRAME", "15m")
     POSITION_MARGIN = float(os.getenv("POSITION_MARGIN", "11.0"))
-    MAX_OPEN_TRADES = int(os.getenv("MAX_OPEN_TRADES", "10"))
+    MAX_OPEN_TRADES = int(os.getenv("MAX_OPEN_TRADES", "5"))
     LEVERAGE = int(os.getenv("LEVERAGE", "10"))
     ENTRY_ORDER_MAX_AGE = int(os.getenv("ENTRY_ORDER_MAX_AGE", "1800"))
     MIN_VOLUME_24H = float(os.getenv("MIN_VOLUME_24H", "500000"))
