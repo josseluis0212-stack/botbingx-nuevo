@@ -105,8 +105,13 @@ class PositionManager:
                         await self.repo.save_trade(trade)
                         
                     # Dynamic strategy exits
-                    if getattr(trade, "strategy", "SMC_PRO") == "SUPERTREND_EMA_MTF":
-                        from app.strategy.supertrend_ema_mtf import check_exit
+                    strategy_name = getattr(trade, "strategy", "SMC_PRO")
+                    if strategy_name in ["SUPERTREND_EMA_MTF", "SUPERTREND_EMA_MTF_PRO"]:
+                        if strategy_name == "SUPERTREND_EMA_MTF":
+                            from app.strategy.supertrend_ema_mtf import check_exit
+                        else:
+                            from app.strategy.supertrend_ema_mtf_pro import check_exit
+                        
                         klines_15m = await self.client.get_klines(symbol, interval="15m", limit=200)
                         
                         # Extraer la EMA21 en tiempo real para el Trailing Stop Dinámico
@@ -118,7 +123,7 @@ class PositionManager:
                                 trade.dynamic_ema21 = ema21s[-1]
 
                         if check_exit(trade, klines_15m=klines_15m):
-                            logger.warning(f"[SUPERVISOR] {symbol} SUPERTREND_EMA_MTF Exit Condition Hit! Closing at market.")
+                            logger.warning(f"[SUPERVISOR] {symbol} {strategy_name} Exit Condition Hit! Closing at market.")
                             await self.executor.close_position_market(symbol, trade.side, trade.remaining_size)
                             trade.position_closed = True
                             await self.repo.mark_position_closed(symbol)
@@ -140,7 +145,7 @@ class PositionManager:
                                 new_sl = ema21
                                 
                             if new_sl != trade.stop_loss:
-                                logger.info(f"[TRAILING] {symbol} SUPERTREND_EMA_MTF updating SL to EMA21: {new_sl:.6f}")
+                                logger.info(f"[TRAILING] {symbol} {strategy_name} updating SL to EMA21: {new_sl:.6f}")
                                 trade.stop_loss = new_sl
                                 await self.executor.cancel_order(symbol, trade.sl_order_id)
                                 trade.sl_order_id = await self.executor.place_stop_loss(symbol, trade.side, trade.remaining_size, trade.stop_loss)
@@ -241,7 +246,7 @@ class PositionManager:
                 changed = True
 
         # --- 1.5. EVALUAR ACTIVACION DE TRAILING (SUPERTREND_EMA_MTF) ---
-        if getattr(trade, "strategy", "SMC_PRO") == "SUPERTREND_EMA_MTF":
+        if getattr(trade, "strategy", "SMC_PRO") in ["SUPERTREND_EMA_MTF", "SUPERTREND_EMA_MTF_PRO"]:
             if not trade.trailing_active:
                 trailing_trigger = self.risk.calculate_levels(trade.entry_price, trade.atr, trade.side, trade.strategy)["tp2_price"]
                 hit_trailing = (trade.side == "LONG" and price >= trailing_trigger) or \
@@ -253,7 +258,7 @@ class PositionManager:
 
         # --- 2. EVALUAR TRAILING STOP ---
         if trade.trailing_active:
-            dynamic_ema21 = getattr(trade, "dynamic_ema21", None) if getattr(trade, "strategy", "SMC_PRO") == "SUPERTREND_EMA_MTF" else None
+            dynamic_ema21 = getattr(trade, "dynamic_ema21", None) if getattr(trade, "strategy", "SMC_PRO") in ["SUPERTREND_EMA_MTF", "SUPERTREND_EMA_MTF_PRO"] else None
             new_sl, new_high, new_low = self.trailing.calculate_trailing_stop(
                 trade.side, price, trade.highest_price, trade.lowest_price, trade.atr, trade.stop_loss, ema21_value=dynamic_ema21
             )
@@ -297,7 +302,7 @@ class PositionManager:
                 # IniciaTrailing base: highest/lowest
                 trade.highest_price = price_filled
                 trade.lowest_price = price_filled
-                dynamic_ema21 = getattr(trade, "dynamic_ema21", None) if getattr(trade, "strategy", "SMC_PRO") == "SUPERTREND_EMA_MTF" else None
+                dynamic_ema21 = getattr(trade, "dynamic_ema21", None) if getattr(trade, "strategy", "SMC_PRO") in ["SUPERTREND_EMA_MTF", "SUPERTREND_EMA_MTF_PRO"] else None
                 new_sl, _, _ = self.trailing.calculate_trailing_stop(
                     trade.side, price_filled, trade.highest_price, trade.lowest_price, trade.atr, trade.stop_loss, ema21_value=dynamic_ema21
                 )
@@ -334,7 +339,10 @@ class PositionManager:
             price = float(ticker["lastPrice"])
             
         levels = self.risk.calculate_levels(price, atr, side, strategy_name)
-        size = self.risk.calculate_position_size(price)
+        
+        balance = await self.client.get_balance("USDT")
+        stop_distance = abs(price - levels["sl_price"])
+        size = self.risk.calculate_position_size(price, stop_distance, strategy_name, balance)
         
         # 1. Crear orden LIMIT cercana
         # 2. Esperar FILLED

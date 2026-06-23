@@ -20,12 +20,17 @@ class RiskManager:
             return False
         return True
 
-    def calculate_position_size(self, entry_price: float) -> float:
+    def calculate_position_size(self, entry_price: float, stop_distance: float = 0.0, strategy_name: str = "SMC_PRO", account_balance: float = 0.0) -> float:
         """
-        Tamaño estático: Margen fijo x Apalancamiento = Volumen Total
+        Tamaño dinámico para PRO (Riesgo 1%) o estático para SMC.
         """
         if entry_price <= 0:
             return 0.0
+
+        if strategy_name == "SUPERTREND_EMA_MTF_PRO" and stop_distance > 0 and account_balance > 0:
+            risk_amount = account_balance * 0.01  # 1% risk
+            size = risk_amount / stop_distance
+            return round(size, 6)
 
         total_volume = self.position_margin * self.leverage
         size = total_volume / entry_price
@@ -37,7 +42,14 @@ class RiskManager:
         """
         Calcula todos los niveles basados en el ATR y la estrategia.
         """
-        if strategy_name == "SUPERTREND_EMA_MTF":
+        if strategy_name == "SUPERTREND_EMA_MTF_PRO":
+            sl_atr = 2.5
+            tp_final_atr = 0.0
+            tp1_atr = 0.0
+            lock_atr = 2.0 # BE trigger
+            lock_sl_atr = 0.0 # Move to entry
+            tp2_atr = 2.5 # Trailing trigger
+        elif strategy_name == "SUPERTREND_EMA_MTF":
             sl_atr = 2.0
             tp_final_atr = 0.0 # No fixed TP
             tp1_atr = 0.0
@@ -88,7 +100,7 @@ class RiskManager:
         """
         Distribuye la posición según estrategia.
         """
-        if strategy_name == "SUPERTREND_EMA_MTF":
+        if strategy_name in ["SUPERTREND_EMA_MTF", "SUPERTREND_EMA_MTF_PRO"]:
             return {
                 "tp1_qty": 0.0,
                 "tp2_qty": 0.0,

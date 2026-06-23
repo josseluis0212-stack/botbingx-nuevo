@@ -6,7 +6,7 @@ from app.exchange.bingx_client import AsyncBingXClient
 from app.core.position_manager import PositionManager
 from app.core.recovery_engine import RecoveryEngine
 from app.strategy.smc_pro_v1 import analyze as evaluate_smc_pro
-from app.strategy.supertrend_ema_mtf import analyze as evaluate_supertrend
+from app.strategy.supertrend_ema_mtf_pro import analyze as evaluate_supertrend_pro
 from app.strategy.bustos_pullback import evaluate_bustos_pullback
 from app.strategy.liquidity_sweep import evaluate_liquidity_sweep
 from app.database.crud import init_db
@@ -175,10 +175,10 @@ class Engine:
             selected_signal = sweep_result
             strategy_name = sweep_result.get("strategy", "SMC_PRO")
         else:
-            sweep_st = await evaluate_supertrend(self.client, symbol)
+            sweep_st = await evaluate_supertrend_pro(self.client, symbol)
             if sweep_st["signal"] != "NONE":
                 selected_signal = sweep_st
-                strategy_name = sweep_st.get("strategy", "SUPERTREND_EMA_MTF")
+                strategy_name = sweep_st.get("strategy", "SUPERTREND_EMA_MTF_PRO")
             else:
                 sweep_bustos = await evaluate_bustos_pullback(self.client, symbol)
                 if sweep_bustos["signal"] != "NONE":
