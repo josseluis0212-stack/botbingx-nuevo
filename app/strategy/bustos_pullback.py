@@ -65,16 +65,7 @@ async def evaluate_bustos_pullback(client, symbol: str) -> dict:
                     entry_price = c["close"]  # Entramos al mercado inmediatamente
                 sl_price = sma50_15m - (atr_15m * 1.5)  # SL adaptativo debajo de la SMA 50
                 
-                # Buscar el máximo reciente (Take Profit)
-                recent_high = max(highs_15m[-20:])
-                
-                # Verificar asimetría (Risk/Reward mínimo de 1:1)
-                risk = entry_price - sl_price
-                reward = recent_high - entry_price
-                
-                if risk > 0 and reward >= risk:
-                    tp_price = recent_high
-                    signal = "LONG"
+                signal = "LONG"
     else:
         # Condición de tendencia bajista en 15M: EMA 21 por debajo de SMA 50 y pendiente negativa
         if current_ema21 < sma50_15m and current_ema21 < old_ema21:
@@ -84,22 +75,21 @@ async def evaluate_bustos_pullback(client, symbol: str) -> dict:
                     entry_price = c["close"]
                 sl_price = sma50_15m + (atr_15m * 1.5)  # SL adaptativo encima de la SMA 50
                 
-                # Buscar el mínimo reciente (Take Profit)
-                recent_low = min(lows_15m[-20:])
-                
-                risk = sl_price - entry_price
-                reward = entry_price - recent_low
-                
-                if risk > 0 and reward >= risk:
-                    tp_price = recent_low
-                    signal = "SHORT"
+                signal = "SHORT"
                     
     if signal != "NONE":
+        lock_trigger_price = entry_price + (1.5 * atr_15m) if signal == "LONG" else entry_price - (1.5 * atr_15m)
+        lock_sl_price = entry_price + (0.1 * atr_15m) if signal == "LONG" else entry_price - (0.1 * atr_15m)
         return {
             "signal": signal,
             "entry_price": entry_price,
             "sl_price": sl_price,
-            "tp_price": tp_price,
+            "tp1_price": 0.0,
+            "tp2_price": 0.0,
+            "tp_final_price": 0.0,
+            "lock_trigger_price": lock_trigger_price,
+            "lock_sl_price": lock_sl_price,
+            "trailing_dist_atr": 1.5,
             "atr": atr_15m,
             "strategy": "BUSTOS_PULLBACK"
         }

@@ -124,32 +124,60 @@ async def analyze(client: AsyncBingXClient, symbol: str) -> dict:
         if is_uptrend and fvg["type"] == "LONG":
             if last_closed["low"] <= fvg["top"] and last_closed["close"] > fvg["bottom"]:
                 if rsi_val < 50: # Confirmation: RSI exhaustion (not overbought)
+                    tp_price = highest_20
+                    if tp_price <= current_price:
+                        tp_price = current_price + (2.0 * atr)
                     setups.append({
                         "signal": "LONG", "strategy": "SMC_FVG_TAP",
-                        "entry": current_price, "sl": fvg["bottom"] - (0.2 * atr)
+                        "entry": current_price, "sl": fvg["bottom"] - (0.2 * atr),
+                        "tp1_price": tp_price, "tp2_price": 0.0, "tp_final_price": tp_price,
+                        "lock_trigger_price": current_price + ((tp_price - current_price) * 0.5),
+                        "lock_sl_price": current_price + (0.1 * atr),
+                        "trailing_dist_atr": 0.0
                     })
         elif is_downtrend and fvg["type"] == "SHORT":
             if last_closed["high"] >= fvg["bottom"] and last_closed["close"] < fvg["top"]:
                 if rsi_val > 50: # Confirmation: RSI exhaustion (not oversold)
+                    tp_price = lowest_20
+                    if tp_price >= current_price:
+                        tp_price = current_price - (2.0 * atr)
                     setups.append({
                         "signal": "SHORT", "strategy": "SMC_FVG_TAP",
-                        "entry": current_price, "sl": fvg["top"] + (0.2 * atr)
+                        "entry": current_price, "sl": fvg["top"] + (0.2 * atr),
+                        "tp1_price": tp_price, "tp2_price": 0.0, "tp_final_price": tp_price,
+                        "lock_trigger_price": current_price - ((current_price - tp_price) * 0.5),
+                        "lock_sl_price": current_price - (0.1 * atr),
+                        "trailing_dist_atr": 0.0
                     })
     for ob in obs:
         if is_uptrend and ob["type"] == "LONG":
             if last_closed["low"] <= ob["top"] and last_closed["close"] > ob["top"]:
                 # RSI Divergence or Pullback Confirmation
                 if rsi_val < 45 or last_closed["low"] < ema200_15m: 
+                    tp_price = highest_20
+                    if tp_price <= current_price:
+                        tp_price = current_price + (2.0 * atr)
                     setups.append({
                         "signal": "LONG", "strategy": "SMC_OB_TAP",
-                        "entry": current_price, "sl": ob["bottom"] - (0.2 * atr)
+                        "entry": current_price, "sl": ob["bottom"] - (0.2 * atr),
+                        "tp1_price": tp_price, "tp2_price": 0.0, "tp_final_price": tp_price,
+                        "lock_trigger_price": current_price + ((tp_price - current_price) * 0.5),
+                        "lock_sl_price": current_price + (0.1 * atr),
+                        "trailing_dist_atr": 0.0
                     })
         elif is_downtrend and ob["type"] == "SHORT":
             if last_closed["high"] >= ob["bottom"] and last_closed["close"] < ob["bottom"]:
                 if rsi_val > 55 or last_closed["high"] > ema200_15m:
+                    tp_price = lowest_20
+                    if tp_price >= current_price:
+                        tp_price = current_price - (2.0 * atr)
                     setups.append({
                         "signal": "SHORT", "strategy": "SMC_OB_TAP",
-                        "entry": current_price, "sl": ob["top"] + (0.2 * atr)
+                        "entry": current_price, "sl": ob["top"] + (0.2 * atr),
+                        "tp1_price": tp_price, "tp2_price": 0.0, "tp_final_price": tp_price,
+                        "lock_trigger_price": current_price - ((current_price - tp_price) * 0.5),
+                        "lock_sl_price": current_price - (0.1 * atr),
+                        "trailing_dist_atr": 0.0
                     })
 
     # ----------------------------------------------------
@@ -161,17 +189,31 @@ async def analyze(client: AsyncBingXClient, symbol: str) -> dict:
     # PDL Sweep (Reversal Long)
     if last_closed["low"] < pdl and last_closed["close"] > pdl and last_closed["close"] > last_closed["open"]:
         if rsi_val < 35: # Only if oversold
+            tp_price = highest_20 # PDL Sweep target is the local high
+            if tp_price <= current_price:
+                tp_price = current_price + (1.5 * atr)
             setups.append({
                 "signal": "LONG", "strategy": "SMC_PDL_SWEEP",
-                "entry": current_price, "sl": last_closed["low"] - (0.2 * atr)
+                "entry": current_price, "sl": last_closed["low"] - (0.1 * atr),
+                "tp1_price": tp_price, "tp2_price": 0.0, "tp_final_price": tp_price,
+                "lock_trigger_price": current_price + ((tp_price - current_price) * 0.5),
+                "lock_sl_price": current_price + (0.1 * atr),
+                "trailing_dist_atr": 0.0
             })
             
     # PDH Sweep (Reversal Short)
     elif last_closed["high"] > pdh and last_closed["close"] < pdh and last_closed["close"] < last_closed["open"]:
         if rsi_val > 65: # Only if overbought
+            tp_price = lowest_20 # PDH Sweep target is the local low
+            if tp_price >= current_price:
+                tp_price = current_price - (1.5 * atr)
             setups.append({
                 "signal": "SHORT", "strategy": "SMC_PDH_SWEEP",
-                "entry": current_price, "sl": last_closed["high"] + (0.2 * atr)
+                "entry": current_price, "sl": last_closed["high"] + (0.1 * atr),
+                "tp1_price": tp_price, "tp2_price": 0.0, "tp_final_price": tp_price,
+                "lock_trigger_price": current_price - ((current_price - tp_price) * 0.5),
+                "lock_sl_price": current_price - (0.1 * atr),
+                "trailing_dist_atr": 0.0
             })
 
     # ----------------------------------------------------

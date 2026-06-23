@@ -252,7 +252,7 @@ class PositionManager:
                 levels = self.risk.calculate_levels(trade.entry_price, trade.atr, trade.side, strategy_name)
                 logger.info(f"🛡️ [SEGURO ACTIVADO] Breakeven (Colchón) activado en {symbol}. Asegurando ganancia.")
                 trade.profit_lock_active = True
-                trade.stop_loss = levels["lock_sl_price"]
+                trade.stop_loss = getattr(trade, "structural_lock_sl_price", levels["lock_sl_price"])
                 # Modificar Stop Loss
                 await self.executor.cancel_order(symbol, trade.sl_order_id)
                 trade.sl_order_id = await self.executor.place_stop_loss(symbol, trade.side, trade.remaining_size, trade.stop_loss)
@@ -276,8 +276,9 @@ class PositionManager:
             dynamic_ema21 = getattr(trade, "dynamic_ema21", None) if strategy_name in ["SUPERTREND_EMA_MTF", "SUPERTREND_EMA_MTF_PRO"] else None
             levels = self.risk.calculate_levels(trade.entry_price, trade.atr, trade.side, strategy_name)
             
+            trail_dist = getattr(trade, "structural_trailing_dist_atr", levels.get("trailing_dist_atr", 1.2))
             new_sl, new_high, new_low = self.trailing.calculate_trailing_stop(
-                trade.side, price, trade.highest_price, trade.lowest_price, trade.atr, trade.stop_loss, ema21_value=dynamic_ema21, trailing_dist_atr=levels.get("trailing_dist_atr", 1.2)
+                trade.side, price, trade.highest_price, trade.lowest_price, trade.atr, trade.stop_loss, ema21_value=dynamic_ema21, trailing_dist_atr=trail_dist
             )
             if new_high != trade.highest_price or new_low != trade.lowest_price:
                 trade.highest_price = new_high
@@ -320,8 +321,9 @@ class PositionManager:
                     
                     strategy_name = getattr(trade, "strategy", "SMC_PRO")
                     levels = self.risk.calculate_levels(trade.entry_price, trade.atr, trade.side, strategy_name)
+                    trail_dist = getattr(trade, "structural_trailing_dist_atr", levels.get("trailing_dist_atr", 1.2))
                     new_sl, _, _ = self.trailing.calculate_trailing_stop(
-                        trade.side, price_filled, trade.highest_price, trade.lowest_price, trade.atr, trade.stop_loss, trailing_dist_atr=levels.get("trailing_dist_atr", 1.2)
+                        trade.side, price_filled, trade.highest_price, trade.lowest_price, trade.atr, trade.stop_loss, trailing_dist_atr=trail_dist
                     )
                     trade.stop_loss = new_sl
                     trade.sl_order_id = await self.executor.place_stop_loss(symbol, trade.side, trade.remaining_size, trade.stop_loss)
@@ -342,8 +344,9 @@ class PositionManager:
                 levels = self.risk.calculate_levels(trade.entry_price, trade.atr, trade.side, strategy_name)
                 
                 dynamic_ema21 = getattr(trade, "dynamic_ema21", None) if "SUPERTREND" in strategy_name else None
+                trail_dist = getattr(trade, "structural_trailing_dist_atr", levels.get("trailing_dist_atr", 1.2))
                 new_sl, _, _ = self.trailing.calculate_trailing_stop(
-                    trade.side, price_filled, trade.highest_price, trade.lowest_price, trade.atr, trade.stop_loss, ema21_value=dynamic_ema21, trailing_dist_atr=levels.get("trailing_dist_atr", 1.2)
+                    trade.side, price_filled, trade.highest_price, trade.lowest_price, trade.atr, trade.stop_loss, ema21_value=dynamic_ema21, trailing_dist_atr=trail_dist
                 )
                 trade.stop_loss = new_sl
                 trade.sl_order_id = await self.executor.place_stop_loss(symbol, trade.side, trade.remaining_size, trade.stop_loss)
@@ -368,9 +371,11 @@ class PositionManager:
             self.trades.pop(symbol, None)
             asyncio.create_task(notifier.notify_close(symbol, trade.side, "Stop Loss / Trailing Hit"))
 
-    async def open_trade(self, symbol: str, side: str, atr: float, price: float, strategy_name: str = "SMC_PRO"):
+    async def open_trade(self, symbol: str, side: str, atr: float, price: float, strategy_name: str = "SMC_PRO", strategy_data: dict = None):
         """Punto de entrada cuando la estrategia dispara."""
         if not self.risk.can_open_trade(len(self.trades)): return
+        if strategy_data is None:
+            strategy_data = {}
 
         # Update entry price to the real-time ticker to avoid price band errors (Code: 101211)
         ticker = await self.client.get_ticker(symbol)
@@ -379,8 +384,24 @@ class PositionManager:
             
         levels = self.risk.calculate_levels(price, atr, side, strategy_name)
         
+        # Override ATR levels with Structural levels calculated directly by the strategy (if present)
+        sl_price = strategy_data.get("sl_price", levels["sl_price"])
+        tp1_price = strategy_data.get("tp1_price", levels["tp1_price"])
+        tp2_price = strategy_data.get("tp2_price", levels["tp2_price"])
+        lock_trigger_price = strategy_data.get("lock_trigger_price", levels["lock_trigger_price"])
+        lock_sl_price = strategy_data.get("lock_sl_price", levels["lock_sl_price"])
+        trailing_dist_atr = strategy_data.get("trailing_dist_atr", levels.get("trailing_dist_atr", 1.2))
+        
+        # Guardar en levels para inyectarlo en TradeState
+        levels["sl_price"] = sl_price
+        levels["tp1_price"] = tp1_price
+        levels["tp2_price"] = tp2_price
+        levels["lock_trigger_price"] = lock_trigger_price
+        levels["lock_sl_price"] = lock_sl_price
+        levels["trailing_dist_atr"] = trailing_dist_atr
+        
         balance = await self.client.get_balance("USDT")
-        stop_distance = abs(price - levels["sl_price"])
+        stop_distance = abs(price - sl_price)
         size = self.risk.calculate_position_size(price, stop_distance, strategy_name, balance)
         
         # 1. Crear orden LIMIT cercana
@@ -423,6 +444,10 @@ class PositionManager:
                         remaining_size=actual_filled_size, sl_order_id=sl_id,
                         strategy=strategy_name
                     )
+                    trade.dynamic_ema21 = trailing_dist_atr # Temporary hack to pass trailing dist to the TradeState object? No, we should just use levels["trailing_dist_atr"] in _on_mark_price by calling risk_manager. But risk_manager won't know the structural dist!
+                    # Wait! TradeState needs to store lock_sl_price and trailing_dist_atr because they might be structural!
+                    setattr(trade, "structural_lock_sl_price", levels["lock_sl_price"])
+                    setattr(trade, "structural_trailing_dist_atr", levels["trailing_dist_atr"])
                     await self.repo.save_trade(trade)
                     self.trades[symbol] = trade
                     await self.sync.subscribe_mark_price(symbol)

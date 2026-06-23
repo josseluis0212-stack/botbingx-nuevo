@@ -44,9 +44,15 @@ def detect_sweep(candles):
     # LONG condition
     # Require strong wick rejection (wick >= 1.5x body) and RSI exhaustion (RSI < 40)
     if sweep["low"] < lookback_lows and confirm["close"] > sweep["low"] and sweep_lower_wick >= sweep_body * 1.5 and rsi_val < 40:
-        # Structural SL: Sweep Low - 0.5 ATR
-        sl_price = sweep["low"] - (0.5 * atr)
+        # Structural SL: Exactly behind the sweep wick
+        sl_price = sweep["low"] - (0.1 * atr)
         
+        # Structural TP: The opposite side of the local lookback range
+        tp_price = sorted_highs[0] # Highest high of the lookback
+        
+        if tp_price <= confirm["close"]:
+            tp_price = confirm["close"] + (1.5 * atr) # Fallback if range is weird
+            
         sl_distance_pct = (confirm["close"] - sl_price) / confirm["close"]
         
         # Reject if structural SL is > 2.0% away
@@ -61,6 +67,12 @@ def detect_sweep(candles):
             "signal": "LONG",
             "entry_price": confirm["close"],
             "sl_price": sl_price,
+            "tp1_price": tp_price,
+            "tp2_price": 0.0,
+            "tp_final_price": tp_price,
+            "lock_trigger_price": confirm["close"] + ((tp_price - confirm["close"]) * 0.5), # BE at 50% to target
+            "lock_sl_price": confirm["close"] + (0.1 * atr),
+            "trailing_dist_atr": 0.0,
             "sweep_low": sweep["low"]
         }
         
@@ -68,9 +80,15 @@ def detect_sweep(candles):
     # Require upper wick to be significantly larger than the body to confirm a true rejection
     # Require upper wick to be at least 1.5x the size of the body, and RSI > 60
     if sweep["high"] > lookback_highs and confirm["close"] < sweep["high"] and sweep_upper_wick >= sweep_body * 1.5 and rsi_val > 60:
-        # Structural SL: Sweep High + 0.5 ATR
-        sl_price = sweep["high"] + (0.5 * atr)
+        # Structural SL: Exactly behind the sweep wick
+        sl_price = sweep["high"] + (0.1 * atr)
         
+        # Structural TP: The opposite side of the local lookback range
+        tp_price = sorted_lows[0] # Lowest low of the lookback
+        
+        if tp_price >= confirm["close"]:
+            tp_price = confirm["close"] - (1.5 * atr) # Fallback
+            
         sl_distance_pct = (sl_price - confirm["close"]) / confirm["close"]
         
         # Reject if structural SL is > 2.0% away
@@ -85,6 +103,12 @@ def detect_sweep(candles):
             "signal": "SHORT",
             "entry_price": confirm["close"],
             "sl_price": sl_price,
+            "tp1_price": tp_price,
+            "tp2_price": 0.0,
+            "tp_final_price": tp_price,
+            "lock_trigger_price": confirm["close"] - ((confirm["close"] - tp_price) * 0.5), # BE at 50% to target
+            "lock_sl_price": confirm["close"] - (0.1 * atr),
+            "trailing_dist_atr": 0.0,
             "sweep_high": sweep["high"]
         }
         

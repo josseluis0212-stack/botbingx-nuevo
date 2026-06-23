@@ -244,5 +244,6 @@ class Engine:
             side=signal,
             atr=atr,
             price=entry,
-            strategy_name=strategy_name
+            strategy_name=strategy_name,
+            strategy_data=selected_signal
         ))
